@@ -1,0 +1,31 @@
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+header {
+    padding: 10px 20% 10px 20%;
+    display: flex;
+    justify-content: space-between;
+    background: #282c34;
+    color: #efefef;
+}
+
+header a {
+    color: #efefef;
+}
+
+header .logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+header ul {
+    display: flex;
+    flex-direction: row;
+}
+
+header ul li {
+    list-style: none;
+}

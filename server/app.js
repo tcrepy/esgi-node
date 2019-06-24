@@ -4,8 +4,11 @@ const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
 const categoryRouter = require("./routes/category");
 const app = express();
+const cors = require('cors');
+
 const verify = require('./middlewares/security').verify;
 
+app.use(cors());
 app.use(bodyparser.json());
 app.use(verify);
 
