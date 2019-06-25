@@ -1,14 +1,14 @@
 import * as React from 'react';
 import '../../assets/css/header.css';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 export const Header = ({loggedIn}) => <header>
     <div className="logo">
-        <Link to="/">Tech Watch</Link>
+        <NavLink to="/list">Tech Watch</NavLink>
     </div>
     <div className="links">
         <ul>
-            <li><Link to="/login">{loggedIn ? "Log out" : "Login"}</Link></li>
+            <li><NavLink to="/login">{loggedIn ? "Log out" : "Login"}</NavLink></li>
         </ul>
     </div>
 </header>;

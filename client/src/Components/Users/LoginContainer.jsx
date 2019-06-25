@@ -40,7 +40,7 @@ class LoginContainer extends React.Component {
     }
 
     render() {
-        const {loggingIn, loggedOut } = this.props;
+        const {loggingIn, loggedOut} = this.props;
         const {username, password, submitted} = this.state;
         return (
             <Login username={username} password={password} submitted={submitted} handleChange={this.handleChange} handleSubmit={this.handleSubmit} loggingIn={loggingIn} loggedOut={loggedOut}/>
