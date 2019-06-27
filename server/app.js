@@ -9,7 +9,7 @@ const app = express();
 const verify = require('./middlewares/security').verify;
 
 app.use(bodyparser.json());
-//app.use(verify);
+app.use(verify);
 
 app.use('/posts', postRouter);
 app.use('/categories', categoryRouter);
