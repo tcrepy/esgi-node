@@ -4,7 +4,7 @@ const db = require('../lib/db');
 const CategorySchema = mongoose.Schema({
     title: String,
     description: String,
-    createdAt: Date
+    created_at: { type: Date, default: Date.now },
 });
 
 const Category = db.model('Category', CategorySchema);

@@ -9,7 +9,8 @@ const UserSchema = mongoose.Schema({
     },
     pseudo: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
@@ -19,7 +20,8 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    created_at: { type: Date, default: Date.now },
 });
 
 UserSchema.pre('save', function (next) {

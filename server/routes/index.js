@@ -5,7 +5,7 @@ const User = require('../Models/UserSchema');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    User.find(req.query).then(data => res.send(data));
+    res.send({ wel: 'come'})
 });
 
 
