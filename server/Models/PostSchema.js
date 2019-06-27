@@ -7,11 +7,47 @@ const PostSchema = mongoose.Schema({
     title: String,
     description: String,
     link: String,
-    categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    categories: [{ type: String }],
     created_at: { type: Date, default: Date.now },
-
 });
 
-const Post = db.model('Post', PostSchema);
+class Post {
+    // -------------------------
+    // Permet de faire une recherche avancée
+    // sur les annonces
+    // -------------------------
+    static paramize(params) {
+      return Promise.resolve().then(() => {
+        let search = {}
+        let promises = []
+        // On parcours les paramètres de recherche
+        // pour construire la requête finale
+        Object.keys(params).forEach(key => {
+          // On récupère la valeur du champs
+          let value = params[key]
 
-module.exports = Post;
+          // On ignore les champs vides
+          if (!value) return
+
+          switch (key) {
+            case 'description':
+            case 'title':
+              let reg = new RegExp(value, 'ig')
+              search.description = reg
+              break
+          }
+        })
+
+        // On exécute toutes les requêtes annexes
+        // et on retourne l'objet de recherche construit
+        return Promise.all(promises).then(() => search)
+      })
+    }
+}
+
+PostSchema.loadClass(Post)
+
+const PostModel = db.model('Post', PostSchema);
+
+module.exports = PostModel;
