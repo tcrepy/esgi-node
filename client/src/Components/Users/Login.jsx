@@ -75,3 +75,4 @@ export const SignIn = ({email, password, handleChange, handleSubmit, loggingIn})
         </Container>
     );
 };
+
