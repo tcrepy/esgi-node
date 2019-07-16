@@ -1,17 +1,27 @@
 import * as React from "react";
+import {ListItem} from "./ListItem";
+import {useContext} from "react";
+import {PostContext} from "../../Context/PostContext";
+import {useEffect} from "react";
+import {history} from "../../_helper/history";
 
-const List = ({list, fetched = false}) =>
-    <>
-        {!fetched && <div>Loading</div>}
-        {fetched && list.length > 0 && <ul>
+export const List = () => {
+    const context = useContext(PostContext);
+
+    useEffect(() => {
+        context.fetchList().catch(err => {
+            console.log(err);
+            history.push('/login');
+        });
+    }, []);
+
+    return (<>
+        {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
+        <ul>
             {
-                list.map(item =>
-                    <li key={item}>{item.name}</li>
-                )
+                context.posts.map((item, key) => <ListItem key={key} item={item}/>)
             }
-        </ul>}
-        {fetched && list.length === 0 && <div>No Records</div>}
-    </>
-;
-
-export {List};
+        </ul>
+        }{context.fetched && context.posts.length === 0 && <div>No Records</div>} </>
+    )
+};

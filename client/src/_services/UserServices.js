@@ -1,17 +1,7 @@
 import config from '../config';
 import {authHeader} from "../_helper/auth-header";
 
-export const userService = {
-    login,
-    logout,
-    register,
-    getAll,
-    getById,
-    update,
-    delete: _delete
-};
-
-function login(username, password) {
+const login = (username, password) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,6 +17,18 @@ function login(username, password) {
             return user;
         });
 }
+
+export const userService = {
+    login,
+    logout,
+    register,
+    getAll,
+    getById,
+    update,
+    delete: _delete
+};
+
+
 
 function logout() {
     // remove user from local storage to log user out

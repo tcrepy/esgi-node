@@ -1,60 +1,49 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {userActions} from "../../redux/actions/UserAction";
-import {Login} from "./Login";
+import React, {useContext, useState} from 'react';
+import {SignIn} from "./Login";
+import {UserContext} from "../../Context/UserContext";
+import {history} from "../../_helper/history";
 
-class LoginContainer extends React.Component {
-    constructor(props) {
-        super(props);
+const initalState = {
+    email: '',
+    password: '',
+    submitted: false,
+    loggedOut: false,
+    loggingIn: false
+};
 
-        // reset login status
-        if (localStorage.user) {
-            this.props.dispatch(userActions.logout());
-        }
-
-        this.state = {
-            username: '',
-            password: '',
-            submitted: false,
-            loggedOut: false
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+export const LoginContainer = () => {
+    const context = useContext(UserContext);
+    // reset login status
+    if (localStorage.user) {
+        context.logout();
     }
+    const [state, setState] = useState(initalState);
 
-    handleChange(e) {
+    const handleChange = (e) => {
         const {name, value} = e.target;
-        this.setState({[name]: value});
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-
-        this.setState({submitted: true});
-        const {username, password} = this.state;
-        const {dispatch} = this.props;
-        if (username && password) {
-            dispatch(userActions.login(username, password));
-        }
-    }
-
-    render() {
-        const {loggingIn, loggedOut } = this.props;
-        const {username, password, submitted} = this.state;
-        return (
-            <Login username={username} password={password} submitted={submitted} handleChange={this.handleChange} handleSubmit={this.handleSubmit} loggingIn={loggingIn} loggedOut={loggedOut}/>
-        );
-    }
-}
-
-function mapStateToProps(state) {
-    const {loggingIn, loggedOut} = state.authentication;
-    return {
-        loggingIn,
-        loggedOut
+        setState(prevState => {
+            return {...prevState, [name]: value}
+        });
     };
-}
 
-const connectedLoginPage = connect(mapStateToProps)(LoginContainer);
-export {connectedLoginPage as LoginPage};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setState(prevState => {
+            return {...prevState, submitted: true, loggingIn: true}
+        });
+        const {email, password} = state;
+        if (email && password) {
+            context.login(email, password)
+                .then(user => {
+                    history.push('/list');
+                })
+                .catch(err => {
+                    setState(initalState);
+                    console.log(err);
+                });
+        }
+    };
+
+    const {email, password, submitted, loggingIn, loggedOut} = state;
+    return <SignIn email={email} password={password} submitted={submitted} handleChange={handleChange} handleSubmit={handleSubmit} loggingIn={loggingIn} loggedOut={loggedOut}/>;
+};
