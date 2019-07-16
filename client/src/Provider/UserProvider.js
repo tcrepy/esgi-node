@@ -23,6 +23,14 @@ export const UserProvider = ({children}) => {
                 );
         },
         logout: () => {
+            setState(prevState => {
+                return {
+                    ...prevState,
+                    user: {}
+                }
+            });
+            userService.logout();
+            return Promise.resolve(true);
         }
     });
     return <UserContext.Provider value={state}>
@@ -30,8 +38,10 @@ export const UserProvider = ({children}) => {
     </UserContext.Provider>
 };
 
-export const withUser = Component => props => (
-    <UserContext.Consumer>
-        {store => <Component {...props} {...store} />}
-    </UserContext.Consumer>
-);
+export const withUser = Component => props => {
+    return <UserContext.Consumer>
+        {store => {
+            return <Component {...props} {...store} />
+        }
+        }</UserContext.Consumer>
+};

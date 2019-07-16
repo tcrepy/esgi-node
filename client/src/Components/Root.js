@@ -6,21 +6,24 @@ import {history} from "../_helper/history";
 import {RegisterPage} from "./Users/RegisterContainer";
 import {ListPage} from "./Nav/Page/ListPage";
 import {LoginPage} from "./Nav/Page/LoginPage";
+import {UserProvider} from "../Provider/UserProvider";
+import {LogoutPage} from "./Nav/Page/LogoutPage";
+import {LinkConstants} from "../_constants/link.constants";
 
 
-const Root = ({store}) => (
-    <Provider store={store}>
-        <div className="App">
-            <Router history={history}>
-                <Route path="/" component={App}/>
+const Root = () => (
+    <div className="App">
+        <UserProvider>
+            <Router history={history}> <Route path="/" component={App}/>
                 <main>
-                    <Route exact path='/list' component={ListPage}/>
-                    <Route path="/login" component={LoginPage}/>
-                    <Route path="/register" component={RegisterPage}/>
+                    <Route exact path={LinkConstants.POST_LIST} component={ListPage}/>
+                    <Route path={LinkConstants.LOGIN} component={LoginPage}/>
+                    <Route path={LinkConstants.LOGOUT} component={LogoutPage}/>
+                    <Route path={LinkConstants.REGISTER} component={RegisterPage}/>
                 </main>
             </Router>
-        </div>
-    </Provider>
+        </UserProvider>
+    </div>
 );
 
 export default Root
