@@ -4,6 +4,7 @@ import {useContext} from "react";
 import {PostContext} from "../../Context/PostContext";
 import {useEffect} from "react";
 import {history} from "../../_helper/history";
+import {LinkConstants} from "../../_constants/link.constants";
 
 export const List = () => {
     const context = useContext(PostContext);
@@ -11,7 +12,7 @@ export const List = () => {
     useEffect(() => {
         context.fetchList().catch(err => {
             console.log(err);
-            history.push('/login');
+            history.push(LinkConstants.LOGIN);
         });
     }, []);
 

@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import {SignIn} from "./Login";
 import {UserContext} from "../../Context/UserContext";
 import {history} from "../../_helper/history";
+import {LinkConstants} from "../../_constants/link.constants";
 
 const initalState = {
     email: '',
@@ -13,10 +14,6 @@ const initalState = {
 
 export const LoginContainer = () => {
     const context = useContext(UserContext);
-    // reset login status
-    if (localStorage.user) {
-        context.logout();
-    }
     const [state, setState] = useState(initalState);
 
     const handleChange = (e) => {
@@ -35,7 +32,7 @@ export const LoginContainer = () => {
         if (email && password) {
             context.login(email, password)
                 .then(user => {
-                    history.push('/list');
+                    history.push(LinkConstants.POST_LIST);
                 })
                 .catch(err => {
                     setState(initalState);

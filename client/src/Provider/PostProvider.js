@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {PostContext} from "../Context/PostContext";
 import {authHeader} from "../_helper/auth-header";
-import {alertActions} from "../redux/actions/AlertAction";
 
 const urlApi = "http://localhost:3000";
 
@@ -42,7 +41,6 @@ export const PostProvider = ({children}) => {
                 .catch(err => {
                     throw new Error("Veuillez vous connecter !");
                     // history.push('/login');
-                    // dispatch(alertActions.error("Veuillez vous connecter !"));
                 });
         },
         DeletePost: (item) => {
