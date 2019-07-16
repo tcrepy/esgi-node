@@ -5,7 +5,6 @@ import * as serviceWorker from './serviceWorker';
 import {store} from "./_helper/store";
 import Root from "./Components/Root";
 
-
 ReactDOM.render(<Root store={store}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

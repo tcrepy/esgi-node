@@ -1,18 +1,22 @@
 import React from 'react'
 import {Provider} from 'react-redux'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {Router, Route} from 'react-router-dom'
 import {App} from "./App";
-import {ListPage} from "./TechWatch/ListContainer";
-import {LoginPage} from "./Users/LoginContainer";
+import {history} from "../_helper/history";
+import {RegisterPage} from "./Users/RegisterContainer";
+import {ListPage} from "./Nav/Page/ListPage";
+import {LoginPage} from "./Nav/Page/LoginPage";
+
 
 const Root = ({store}) => (
     <Provider store={store}>
         <div className="App">
-            <Router>
+            <Router history={history}>
                 <Route path="/" component={App}/>
                 <main>
-                    <Route path="/list" component={ListPage}/>
+                    <Route exact path='/list' component={ListPage}/>
                     <Route path="/login" component={LoginPage}/>
+                    <Route path="/register" component={RegisterPage}/>
                 </main>
             </Router>
         </div>

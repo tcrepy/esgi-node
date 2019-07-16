@@ -1,27 +1,77 @@
-import * as React from "react"
-import {Link} from "react-router-dom";
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {red} from "@material-ui/core/colors";
+import {Lock} from "@material-ui/icons";
+import {NavLink} from "react-router-dom";
 
-export const Login = ({username, password, submitted, handleChange, handleSubmit, loggingIn, loggedOut}) =>
-    <div className="col-md-6 col-md-offset-3">
-        <h2>Login</h2>
-        {loggedOut && <div>Logged Out !</div>}
-        <form name="form" onSubmit={handleSubmit}>
-            <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-                <label htmlFor="username">Username</label>
-                <input type="text" className="form-control" name="username" value={username} onChange={handleChange}/> {submitted && !username &&
-            <div className="help-block">Username is required</div>
-            }
+const useStyles = makeStyles(theme => ({
+    '@global': {
+        body: {
+            backgroundColor: theme.palette.common.white,
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+    root: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    wrapper: {
+        margin: theme.spacing(1),
+        position: 'relative',
+    },
+    buttonProgress: {
+        color: red[500],
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: -12,
+        marginLeft: -12,
+    },
+}));
+
+export const SignIn = ({email, password, handleChange, handleSubmit, loggingIn}) => {
+    const classes = useStyles();
+    return (
+        <Container component="main" maxWidth="xs"> <CssBaseline/>
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}> <Lock/> </Avatar>
+                <Typography component="h1" variant="h5"> Sign in </Typography>
+                <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                    <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus value={email} onChange={handleChange}/>
+                    <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" value={password} onChange={handleChange}/>
+                    <div className={classes.wrapper}>
+                        <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}> Sign In </Button> {loggingIn &&
+                    <CircularProgress size={24} className={classes.buttonProgress}/>}
+                    </div>
+                    <Grid container> <Grid item> <NavLink to="/register" variant="body2">
+                        {"Don't have an account? Sign Up"}
+                    </NavLink> </Grid> </Grid>
+                </form>
             </div>
-            <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                <label htmlFor="password">Password</label>
-                <input type="password" className="form-control" name="password" value={password} onChange={handleChange}/> {submitted && !password &&
-            <div className="help-block">Password is required</div>
-            }
-            </div>
-            <div className="form-group">
-                <button className="btn btn-primary">Login</button>
-                {loggingIn && <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/> }
-                <Link to="/register" className="btn btn-link">Register</Link>
-            </div>
-        </form>
-    </div>;
+        </Container>
+    );
+};
