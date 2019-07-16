@@ -6,8 +6,11 @@ const categoryRouter = require("./routes/categories");
 const indexRouter = require("./routes/index");
 
 const app = express();
+const cors = require('cors');
+
 const verify = require('./middlewares/security').verify;
 
+app.use(cors());
 app.use(bodyparser.json());
 app.use(verify);
 
