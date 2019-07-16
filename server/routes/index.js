@@ -71,9 +71,33 @@ router.get('/populate', (req, res) => {
         .catch(err => res.send(err));
 });
 
+router.post( '/register', ( req, res, next ) => {
+    console.log(req.body, req.query)
+    Promise
+        .resolve()
+        .then(() => {
+            if ( !( req.body.email
+                && req.body.password)
+                && req.body.pseudo ) {
+                throw new Error( 'All fields are required' );
+            }
+        })
+        .then(() => {
+            let user = new User(req.body)
+            return user.save()
+        })
+        .then( user => res.json( user ) )
+        .catch(err => {
+            console.log(err)
+            return next
+        })
+});
+
 router.post('/login', (req, res) => {
+    console.log(req.body.email, req.body.password)
     User.login(req.body.email, req.body.password)
         .then(data => {
+            console.log(data)
             const token = createToken(data);
             res.status(201).send({token});
         })

@@ -8,12 +8,13 @@ const indexRouter = require("./routes/index");
 const app = express();
 const cors = require('cors');
 
+app.use(bodyparser.json());
+app.use(cors());
+
 app.use('/', indexRouter);
 
 const verify = require('./middlewares/security').verify;
 
-app.use(cors());
-app.use(bodyparser.json());
 app.use(verify);
 
 app.use('/posts', postRouter);
