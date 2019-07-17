@@ -49,6 +49,18 @@ router.get( '/', ( req, res, next ) => {
       .catch( next )
   } )
 
+router.get('/upvote/:id', (req, res) => {
+  const id = req.params.id
+
+  Promise
+      .resolve()
+      .then(() => Post.update(
+        {"_id" : id },
+        { $inc: { "upvote": 1 } }
+      ))
+      .then(post => res.send(post))
+      .catch(err => res.send(err));
+});
 
 router.get('/:id', (req, res) => {
     const id = req.params.id

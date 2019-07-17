@@ -10,6 +10,7 @@ const PostSchema = mongoose.Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     categories: [{ type: String }],
     created_at: { type: Date, default: Date.now },
+    upvote: { type: Number, default: 0 }
 });
 
 class Post {
