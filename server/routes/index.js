@@ -72,7 +72,7 @@ router.get('/populate', (req, res) => {
             return Promise.all(promises)
         })
         .then(() => res.json({action: true}))
-        .catch(err => res.send(err));
+        .catch(err => res.status(500).send(err));
 });
 
 router.post('/register', (req, res, next) => {
@@ -92,7 +92,7 @@ router.post('/register', (req, res, next) => {
         .then(user => res.json(user))
         .catch(err => {
             console.log(err)
-            return next
+            res.status(500).json(err)
         })
 });
 

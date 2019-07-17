@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
         .resolve()
         .then(() => User.find())
         .then(users => res.status(200).send(users))
-        .catch(err => res.send(err));
+        .catch(err => res.status(500).send(err));
 });
 
 router.get('/:id', (req, res) => {
@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
         .resolve()
         .then(() => User.findById(id))
         .then(user => res.status(200).send(user))
-        .catch(err => res.send(err));
+        .catch(err => res.status(500).send(err));
 });
 
 router.post( '/', ( req, res, next ) => {
@@ -51,7 +51,7 @@ router.delete( '/:id', ( req, res, next ) => {
         .resolve()
         .then(() => User.remove({ _id: id }).exec())
         .then(() => res.status(204).send({action : "ok"}))
-        .catch(next)
+        .catch(err => res.status(500).send(err))
 });
 
 module.exports = router;
