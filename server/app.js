@@ -11,11 +11,11 @@ const cors = require('cors');
 app.use(bodyparser.json());
 app.use(cors());
 
-app.use('/', indexRouter);
-
 const verify = require('./middlewares/security').verify;
 
 app.use(verify);
+
+app.use('/', indexRouter);
 
 app.use('/posts', postRouter);
 app.use('/categories', categoryRouter);

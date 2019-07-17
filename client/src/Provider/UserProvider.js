@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {userService} from "../_services/UserServices";
 import {UserContext} from "../Context/UserContext";
+import {AlertContext} from "../Context/AlertContext";
 
 export const UserProvider = ({children}) => {
+    const alert = useContext(AlertContext);
     const [state, setState] = useState({
         user: {},
         login: (email, password) => {
@@ -41,6 +43,20 @@ export const UserProvider = ({children}) => {
             })
         }
     });
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        if (user) {
+            userService.checkConnexion().then(() => {
+                setState(prevState => {
+                    return {...prevState, user: JSON.parse(user)}
+                });
+            }).catch(error => {
+                alert.error(error.toString());
+            })
+        }
+    }, []);
+
     return <UserContext.Provider value={state}>
         {children}
     </UserContext.Provider>
