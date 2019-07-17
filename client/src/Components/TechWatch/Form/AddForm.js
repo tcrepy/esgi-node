@@ -12,6 +12,7 @@ import {Assignment} from "@material-ui/icons";
 import FilledInput from "@material-ui/core/FilledInput";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import {CategoryContext} from "../../../Context/CategoryContext";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -57,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const AddForm = ({title, link, description, category, handleChange, handleSubmit, submitted}) => {
+export const AddForm = ({title, link, description, category, handleChange, handleSubmit, submitted, categories}) => {
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs"> <CssBaseline/>
@@ -72,7 +73,10 @@ export const AddForm = ({title, link, description, category, handleChange, handl
                         MenuProps: {
                             className: classes.menu,
                         },
-                    }}> <MenuItem value="coucou"> Coucou label </MenuItem> </TextField>
+                    }}>
+                        {categories.map((value, key) =>
+                            <MenuItem key={key} value={JSON.stringify(value)}> {value.title} </MenuItem>)}
+                    </TextField>
 
                     <div className={classes.wrapper}>
                         <Button disabled={submitted} type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Save</Button> {submitted &&

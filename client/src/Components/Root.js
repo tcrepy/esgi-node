@@ -30,7 +30,9 @@ const Root = () => (
 
                         <PostProvider>
                         <Route exact path={LinkConstants.POST_LIST} component={PostsList}/>
-                        <Route exact path={LinkConstants.POST_CREATE} component={AddContainer}/>
+                            <CategoryProvider>
+                                <Route exact path={LinkConstants.POST_CREATE} component={AddContainer}/>
+                            </CategoryProvider>
                         </PostProvider>
 
                         <CategoryProvider>

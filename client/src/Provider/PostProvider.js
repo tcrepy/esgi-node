@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {PostContext} from "../Context/PostContext";
 import {authHeader} from "../_helper/auth-header";
+import {postServices} from "../_services/PostServices";
 
 const urlApi = "http://localhost:3000";
 
@@ -71,37 +72,8 @@ export const PostProvider = ({children}) => {
                 throw new Error('An error occured')
             });
         },
-        NewPost: (title, link, description) => {
-            return fetch(`${urlApi}/posts`, {
-                method: 'POST',
-                headers: {
-                    ...authHeader(),
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                mode: 'cors',
-                body: JSON.stringify({
-                    "title": title,
-                    "link": link,
-                    "description": description
-                })
-            }).then(response =>{
-                if (response.status !== 201) {
-                    return Promise.reject(response);
-                } else {
-                    return response.json();
-                }
-            }).then(data => {
-                console.log(data);
-                setState(prevState => {
-                    return {
-                        ...prevState,
-                        posts: [...prevState.posts, data]
-                    }
-                })
-            }).catch(err => {
-                throw new Error("Impossible de push");
-            });
+        NewPost: (title, link, description, categories) => {
+            return postServices.save(title, link, description, categories).then()
         }
     });
 

@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
 
 export const CategoryItem = ({item}) => {
     const CustomColor = color => {
-        console.log(color);
         return makeStyles(theme => ({
             customColor: {
                 backgroundColor: color
