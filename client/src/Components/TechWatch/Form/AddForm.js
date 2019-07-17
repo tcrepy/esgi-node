@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const AddForm = ({title, link, description, category, handleChange, handleSubmit, submitted, categories}) => {
+export const AddForm = ({title, link, description, category, handleChange, handleSubmit, submitted, categories, title_validation, link_validation, category_validation}) => {
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs"> <CssBaseline/>
@@ -66,10 +66,10 @@ export const AddForm = ({title, link, description, category, handleChange, handl
                 <Avatar className={classes.avatar}> <Assignment/> </Avatar>
                 <Typography component="h1" variant="h5"> New post </Typography>
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                    <TextField variant="outlined" margin="normal" required fullWidth id="title" label="Post title" name="title" autoComplete="title" autoFocus value={title} onChange={handleChange}/>
-                    <TextField variant="outlined" margin="normal" required fullWidth id="link" label="Post link" name="link" autoComplete="link" value={link} onChange={handleChange}/>
+                    <TextField error={!!title_validation} helperText={title_validation} variant="outlined" margin="normal" required fullWidth id="title" label="Post title" name="title" autoComplete="title" autoFocus value={title} onChange={handleChange}/>
+                    <TextField error={!!link_validation} helperText={link_validation} variant="outlined" margin="normal" required fullWidth id="link" label="Post link" name="link" autoComplete="link" value={link} onChange={handleChange}/>
                     <TextField variant="outlined" multiline={true} rows={4} margin="normal" required fullWidth id="description" label="Post description" name="description" autoComplete="description" value={description} onChange={handleChange}/>
-                    <TextField variant="outlined" margin="normal" required fullWidth id="category" name="category" select label="Post category" value={category} onChange={handleChange} SelectProps={{
+                    <TextField error={!!category_validation} helperText={category_validation} variant="outlined" margin="normal" required fullWidth id="category" name="category" select label="Post category" value={category} onChange={handleChange} SelectProps={{
                         MenuProps: {
                             className: classes.menu,
                         },

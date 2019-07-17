@@ -10,7 +10,6 @@ import List from "@material-ui/core/List";
 import {makeStyles} from '@material-ui/core/styles';
 import {useMemo} from "react";
 import {CreateButton} from "../Nav/CreateButton";
-import {PostProvider} from "../../Provider/PostProvider";
 import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -22,12 +21,20 @@ const useStyles = makeStyles(theme => ({
 
 export const PostsList = withAlert((alert) => {
     const context = useContext(PostContext);
+
+    useEffect(() => {
+        if (!localStorage.getItem('user')) {
+            alert.error('You need to be connect to access to this page');
+            history.push(LinkConstants.LOGIN);
+        }
+    });
     useEffect(() => {
         context.fetchList().catch(err => {
             alert.error(err.toString());
             history.push(LinkConstants.LOGIN);
         });
     }, []);
+
     const classes = useStyles();
 
     const handleDelete = (e, item) => {

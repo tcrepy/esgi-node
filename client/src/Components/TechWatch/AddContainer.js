@@ -11,9 +11,12 @@ export const AddContainer = withAlert(({success, error}) => {
     const catContext = useContext(CategoryContext);
     const [state, setState] = useState({
         title: "",
+        title_validation: "",
         link: "",
+        link_validation: "",
         description: "",
-        category: ""
+        category: "",
+        category_validation: ""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -35,17 +38,42 @@ export const AddContainer = withAlert(({success, error}) => {
         e.preventDefault();
         setSubmitted(true);
         const {title, link, description, category} = state;
-        context.NewPost(title, link, description, category).then(() => {
-            success('A new post has been added');
-            history.push(LinkConstants.POST_LIST);
-        }).catch(err => {
-            error(err);
-        }).finally(() => {
+        if (check()) {
+            context.NewPost(title, link, description, [category]).then(() => {
+                success('A new post has been added');
+                history.push(LinkConstants.POST_LIST);
+            }).catch(err => {
+                error(err);
+            }).finally(() => {
+                setSubmitted(false);
+            });
+        } else {
             setSubmitted(false);
-        });
+        }
     };
 
-    const {title, link, description, category} = state;
+    const check = () => {
+        setState(prevState => {
+            return {
+                ...prevState,
+                title_validation: state.title === "" ? "Title can't be empty" : "",
+                link_validation: state.link === "" ? "Link can't be empty" : "",
+                category_validation: state.category === "" ? "Category can't be empty" : ""
+            };
+        });
+        const regex = new RegExp(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/);
+        const match = regex.exec(state.link);
+
+        if (match === null) {
+            setState(prevState => {
+                return {...prevState, link_validation: "Please enter a valid URL (exemple: \"https://www.my-url.com\")"}
+            });
+            return false;
+        }
+
+        return state.title !== "" && state.title !== "" && state.title !== "";
+    };
+
     return useMemo(() =>
-        <AddForm title={title} link={link} description={description} category={category} handleChange={handleChange} handleSubmit={handleSubmit} submitted={submitted} categories={catContext.categories}/>, [context, catContext, state]);
+        <AddForm {...state} handleChange={handleChange} handleSubmit={handleSubmit} submitted={submitted} categories={catContext.categories}/>, [context, catContext, state]);
 });

@@ -12,13 +12,7 @@ const getAll = () => {
     return fetch(`${route}/`, requestOptions).then(handleResponse);
 };
 
-const save = (title, description, link, categories) => {
-    console.log({
-        "title": title,
-        "description": description,
-        "link": link,
-        "categories": categories
-    });
+const save = (title, link, description, categories) => {
     const requestOptions = {
         method: "POST",
         headers: fetchHeaders,

@@ -21,7 +21,7 @@ export const PostItem = ({item, handleDelete}) => {
             <Avatar alt="Remy Sharp" src={user} />
         </ListItemAvatar>
         <ListItemText
-            primary={item.title}
+            primary={<a href={item.link} target="_blank">{item.title}</a>}
             secondary={
                 <React.Fragment>
                     <Typography
@@ -30,9 +30,9 @@ export const PostItem = ({item, handleDelete}) => {
                         className={classes.inline}
                         color="textPrimary"
                     >
-                        Ali Connors
+
                     </Typography>
-                    {" — I'll be in your neighborhood doing errands this…"}
+                    {item.description}
                 </React.Fragment>
             }
         />
