@@ -4,8 +4,8 @@ import {authHeader} from "../_helper/auth-header";
 const login = (username, password) => {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: username, password })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email: username, password})
     };
 
     return fetch(`${config.apiUrl}/login`, requestOptions)
@@ -25,10 +25,17 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    checkConnexion
 };
 
-
+function checkConnexion() {
+    const requestOptions = {
+        method: 'GET',
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
+    };
+    return fetch(`${config.apiUrl}/`, requestOptions).then(handleResponse);
+}
 
 function logout() {
     // remove user from local storage to log user out
@@ -56,7 +63,7 @@ function getById(id) {
 function register(user) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
@@ -66,7 +73,7 @@ function register(user) {
 function update(user) {
     const requestOptions = {
         method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
