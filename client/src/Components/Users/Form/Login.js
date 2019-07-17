@@ -1,15 +1,15 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import CircularProgress from "@material-ui/core/CircularProgress";
-import {red} from "@material-ui/core/colors";
-import {Lock} from "@material-ui/icons";
+import Avatar from '@material-ui/core/Avatar/index';
+import Button from '@material-ui/core/Button/index';
+import CssBaseline from '@material-ui/core/CssBaseline/index';
+import TextField from '@material-ui/core/TextField/index';
+import Grid from '@material-ui/core/Grid/index';
+import Typography from '@material-ui/core/Typography/index';
+import {makeStyles} from '@material-ui/core/styles/index';
+import Container from '@material-ui/core/Container/index';
+import CircularProgress from "@material-ui/core/CircularProgress/index";
+import {red} from "@material-ui/core/colors/index";
+import {Lock} from "@material-ui/icons/index";
 import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({

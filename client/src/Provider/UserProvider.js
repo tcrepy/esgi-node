@@ -31,6 +31,14 @@ export const UserProvider = ({children}) => {
             });
             userService.logout();
             return Promise.resolve(true);
+        },
+        register: (email, pseudo, password) => {
+            const user = {email, pseudo, password};
+            return userService.register(user).then(user => {
+                console.log(user);
+            }, error => {
+                throw new Error(error.toString());
+            })
         }
     });
     return <UserContext.Provider value={state}>

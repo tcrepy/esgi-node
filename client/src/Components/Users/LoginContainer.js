@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react';
-import {SignIn} from "./Login";
+import {SignIn} from "./Form/Login";
 import {UserContext} from "../../Context/UserContext";
 import {history} from "../../_helper/history";
 import {LinkConstants} from "../../_constants/link.constants";
+import {withAlert} from "../../Provider/AlertProvider";
 
 const initalState = {
     email: '',
@@ -12,7 +13,7 @@ const initalState = {
     loggingIn: false
 };
 
-export const LoginContainer = () => {
+export const LoginContainer = withAlert(({success, error}) => {
     const context = useContext(UserContext);
     const [state, setState] = useState(initalState);
 
@@ -32,15 +33,16 @@ export const LoginContainer = () => {
         if (email && password) {
             context.login(email, password)
                 .then(user => {
+                    success('Logged in !');
                     history.push(LinkConstants.POST_LIST);
                 })
                 .catch(err => {
                     setState(initalState);
-                    console.log(err);
+                    error(err.toString());
                 });
         }
     };
 
     const {email, password, submitted, loggingIn, loggedOut} = state;
     return <SignIn email={email} password={password} submitted={submitted} handleChange={handleChange} handleSubmit={handleSubmit} loggingIn={loggingIn} loggedOut={loggedOut}/>;
-};
+});

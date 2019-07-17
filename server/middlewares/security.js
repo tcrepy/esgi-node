@@ -1,7 +1,8 @@
 const verifyToken = require('../lib/auth').verifyToken;
 
 const verify = (req, res, next) => {
-    if (req.path === '/login') return next();
+    console.log(req.path, ['/login', '/register'].includes(req.path));
+    if (['/login', '/register'].includes(req.path)) return next();
 
     const authHeader = req.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer')) {

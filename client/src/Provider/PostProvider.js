@@ -40,7 +40,6 @@ export const PostProvider = ({children}) => {
                 })
                 .catch(err => {
                     throw new Error("Veuillez vous connecter !");
-                    // history.push('/login');
                 });
         },
         DeletePost: (item) => {
