@@ -8,10 +8,10 @@ router.get('/', (req, res) => {
     Promise
         .resolve()
         .then(() => Post.find())
-        .then(posts => res.send(posts))
+        .then(posts => res.status(200).send(posts))
         .catch(err => res.send(err));
 });
-
+/*
 router.get( '/', ( req, res, next ) => {
     let limit = req.query.limit ? req.query.limit : 20
     let page = req.query.page ? req.query.page - 1 : 0
@@ -48,7 +48,7 @@ router.get( '/', ( req, res, next ) => {
       } )
       .catch( next )
   } )
-
+*/
 router.get('/upvote/:id', (req, res) => {
   const id = req.params.id
 
@@ -68,7 +68,7 @@ router.get('/:id', (req, res) => {
     Promise
         .resolve()
         .then(() => Post.findById(id))
-        .then(post => res.send(post))
+        .then(post => res.status(200).send(post))
         .catch(err => res.send(err));
 });
 
@@ -88,7 +88,7 @@ router.post('/', (req, res) => {
                 return post.save()
             }
         })
-        .then( post => res.json( post ) )
+        .then( post => res.status(201).json( post ) )
         .catch(err => res.send(err));
 });
 

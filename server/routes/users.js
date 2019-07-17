@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     Promise
         .resolve()
         .then(() => User.find())
-        .then(users => res.send(users))
+        .then(users => res.status(200).send(users))
         .catch(err => res.send(err));
 });
 
@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
     Promise
         .resolve()
         .then(() => User.findById(id))
-        .then(user => res.send(user))
+        .then(user => res.status(200).send(user))
         .catch(err => res.send(err));
 });
 
@@ -37,7 +37,7 @@ router.post( '/', ( req, res, next ) => {
             let user = new User(req.body)
             return user.save()
         })
-        .then( user => res.json( user ) )
+        .then( user => res.status(201).json( user ) )
         .catch(err => {
             console.log(err)
             return next
