@@ -11,6 +11,7 @@ import {useMemo} from "react";
 import {CategoryContext} from "../../Context/CategoryContext";
 import {NavLink} from "react-router-dom";
 import {CreateButton} from "../Nav/CreateButton";
+import {CategoryItem} from "./CategoryItem";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -33,7 +34,7 @@ export const CategoriesList = withAlert((alert) => {
             {!context.fetched && <div>Loading</div>} {context.fetched && context.categories.length > 0 &&
         <ul>
             {
-                context.categories.map((item, key) => <PostItem key={key} item={item}/>)
+                context.categories.map((item, key) => <CategoryItem key={key} item={item}/>)
             }
         </ul>
         }{context.fetched && context.categories.length === 0 && <div>No Records</div>}
