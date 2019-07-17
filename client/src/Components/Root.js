@@ -2,7 +2,7 @@ import React from 'react'
 import {Router, Route} from 'react-router-dom'
 import {App} from "./App";
 import {history} from "../_helper/history";
-import {RegisterPage} from "./Users/RegisterContainer";
+import {RegisterContainer} from "./Users/RegisterContainer";
 import {ListPage} from "./Nav/Page/ListPage";
 import {LoginPage} from "./Nav/Page/LoginPage";
 import {UserProvider} from "../Provider/UserProvider";
