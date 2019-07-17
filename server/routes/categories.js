@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     Promise
         .resolve()
         .then(() => Category.find())
-        .then(categories => res.send(categories))
+        .then(categories => res.status(200).send(categories))
         .catch(err => res.send(err));
 });
 
@@ -17,7 +17,7 @@ router.get('/:id', (req, res) => {
     Promise
         .resolve()
         .then(() => Category.findById(id))
-        .then(category => res.send(category))
+        .then(category => res.status(200).send(category))
         .catch(err => res.send(err));
 });
 
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
                 return category.save()
             }
         })
-        .then( category => res.json( category ) )
+        .then( category => res.status(201).json( category ) )
         .catch(err => res.send(err));
 });
 
@@ -45,7 +45,7 @@ router.delete( '/:id', ( req, res, next ) => {
     Promise
         .resolve()
         .then(() => Category.remove({ _id: id }).exec())
-        .then(() => res.json({ action: true }))
+        .then(() => res.status(204).send({action : "ok"}))
         .catch(err => res.send(err));
 });
 

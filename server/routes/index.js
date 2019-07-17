@@ -55,7 +55,6 @@ router.get('/populate', (req, res) => {
 
                 promises.push(user.save())
             }
-
             return Promise.all(promises)
         })
         .then(() => {
@@ -88,7 +87,7 @@ router.post('/register', (req, res, next) => {
         })
         .then(() => {
             let user = new User(req.body)
-            return user.save()
+            return res.status(201).send(user);
         })
         .then(user => res.json(user))
         .catch(err => {
