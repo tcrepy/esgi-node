@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
         .resolve()
         .then(() => User.find())
         .then(users => res.status(200).send(users))
-        .catch(err => res.status(500).send({"err" : err.toString()}));
+        .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 router.get('/:id', (req, res) => {
@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
         .resolve()
         .then(() => User.findById(id))
         .then(user => res.status(200).send(user))
-        .catch(err => res.status(500).send({"err" : err.toString()}));
+        .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 router.post( '/', ( req, res, next ) => {
@@ -38,7 +38,7 @@ router.post( '/', ( req, res, next ) => {
             return user.save()
         })
         .then( user => res.status(201).json( user ) )
-        .catch(err => res.status(500).send({"err" : err.toString()}));
+        .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 router.delete( '/:id', ( req, res, next ) => {
@@ -48,7 +48,7 @@ router.delete( '/:id', ( req, res, next ) => {
         .resolve()
         .then(() => User.remove({ _id: id }).exec())
         .then(() => res.status(204).send({action : "ok"}))
-        .catch(err => res.status(500).send({"err" : err.toString()}));
+        .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 module.exports = router;
