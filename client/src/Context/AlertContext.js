@@ -7,7 +7,11 @@ export const AlertInitialState = {
     duration: 6000,
     open: false,
     handleClose: () => {},
-    alert: () => {}
-}
+    alert: () => {},
+    success: () => {},
+    error: () => {},
+    info: () => {},
+    warning: () => {}
+};
 
 export const AlertContext = createContext(AlertInitialState);

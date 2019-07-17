@@ -22,7 +22,6 @@ export const AlertProvider = ({children}) => {
             });
         },
         alert: (type, message, duration = 6000) => {
-            console.log(type, message);
             setState(prevState => {
                 return {
                     ...prevState,
