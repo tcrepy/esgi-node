@@ -9,6 +9,9 @@ import Container from '@material-ui/core/Container/index';
 import CircularProgress from "@material-ui/core/CircularProgress/index";
 import {red} from "@material-ui/core/colors/index";
 import {Assignment} from "@material-ui/icons";
+import FilledInput from "@material-ui/core/FilledInput";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -49,9 +52,12 @@ const useStyles = makeStyles(theme => ({
         marginTop: -12,
         marginLeft: -12,
     },
+    menu: {
+        width: 200,
+    }
 }));
 
-export const AddForm = ({title, link, description, handleChange, handleSubmit, submitted}) => {
+export const AddForm = ({title, link, description, category, handleChange, handleSubmit, submitted}) => {
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs"> <CssBaseline/>
@@ -61,7 +67,13 @@ export const AddForm = ({title, link, description, handleChange, handleSubmit, s
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <TextField variant="outlined" margin="normal" required fullWidth id="title" label="Post title" name="title" autoComplete="title" autoFocus value={title} onChange={handleChange}/>
                     <TextField variant="outlined" margin="normal" required fullWidth id="link" label="Post link" name="link" autoComplete="link" value={link} onChange={handleChange}/>
-                    <TextField variant="outlined" margin="normal" required fullWidth id="description" label="Post description" name="description" autoComplete="description" value={description} onChange={handleChange}/>
+                    <TextField variant="outlined" multiline={true} rows={4} margin="normal" required fullWidth id="description" label="Post description" name="description" autoComplete="description" value={description} onChange={handleChange}/>
+                    <TextField variant="outlined" margin="normal" required fullWidth id="category" name="category" select label="Post category" value={category} onChange={handleChange} SelectProps={{
+                        MenuProps: {
+                            className: classes.menu,
+                        },
+                    }}> <MenuItem value="coucou"> Coucou label </MenuItem> </TextField>
+
                     <div className={classes.wrapper}>
                         <Button disabled={submitted} type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Save</Button> {submitted &&
                     <CircularProgress size={24} className={classes.buttonProgress}/>}

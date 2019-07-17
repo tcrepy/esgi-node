@@ -86,13 +86,13 @@ export const PostProvider = ({children}) => {
                     "description": description
                 })
             }).then(response =>{
-                console.log(response);
                 if (response.status !== 201) {
                     return Promise.reject(response);
                 } else {
                     return response.json();
                 }
             }).then(data => {
+                console.log(data);
                 setState(prevState => {
                     return {
                         ...prevState,

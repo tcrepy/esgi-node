@@ -11,6 +11,7 @@ export const AddContainer = withAlert(({success, error}) => {
         title: "",
         link: "",
         description: "",
+        category: ""
     });
     const [submitted, setSubmitted] = useState(false);
 
@@ -34,6 +35,6 @@ export const AddContainer = withAlert(({success, error}) => {
         });
     };
 
-    const {title, link, description} = state;
-    return useMemo(() => <AddForm title={title} link={link} description={description} handleChange={handleChange} handleSubmit={handleSubmit} submitted={submitted}/>, [state, submitted]);
+    const {title, link, description, category} = state;
+    return useMemo(() => <AddForm title={title} link={link} description={description} category={category} handleChange={handleChange} handleSubmit={handleSubmit} submitted={submitted}/>, [state, submitted]);
 });
