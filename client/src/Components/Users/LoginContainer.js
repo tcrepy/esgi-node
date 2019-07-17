@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {SignIn} from "./Form/Login";
 import {UserContext} from "../../Context/UserContext";
 import {history} from "../../_helper/history";
@@ -44,5 +44,5 @@ export const LoginContainer = withAlert(({success, error}) => {
     };
 
     const {email, password, submitted, loggingIn, loggedOut} = state;
-    return <SignIn email={email} password={password} submitted={submitted} handleChange={handleChange} handleSubmit={handleSubmit} loggingIn={loggingIn} loggedOut={loggedOut}/>;
+    return useMemo(() => <SignIn email={email} password={password} submitted={submitted} handleChange={handleChange} handleSubmit={handleSubmit} loggingIn={loggingIn} loggedOut={loggedOut}/>, [state]);
 });

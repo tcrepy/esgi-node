@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import {userService} from "../_services/UserServices";
 import {UserContext} from "../Context/UserContext";
 import {AlertContext} from "../Context/AlertContext";
+import {LinkConstants} from "../_constants/link.constants";
+import {history} from "../_helper/history";
 
 export const UserProvider = ({children}) => {
     const alert = useContext(AlertContext);
@@ -53,7 +55,10 @@ export const UserProvider = ({children}) => {
                 });
             }).catch(error => {
                 alert.error(error.toString());
+                return history.push(LinkConstants.LOGIN);
             })
+        } else {
+            return history.push(LinkConstants.LOGIN);
         }
     }, []);
 

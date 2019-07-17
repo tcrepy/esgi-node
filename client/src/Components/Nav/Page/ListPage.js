@@ -1,11 +1,11 @@
 import React from 'react';
 import {PostProvider} from "../../../Provider/PostProvider";
-import {List} from "../../TechWatch/List";
-import {Create} from "../../TechWatch/action/Create";
+import {PostsList} from "../../TechWatch/PostsList";
+import {CreateButton} from "../../TechWatch/action/CreateButton";
 
 export const ListPage = () => {
     return <PostProvider>
-        <List/>
-        <Create/>
+        <PostsList/>
+        <CreateButton/>
     </PostProvider>
 };
