@@ -9,6 +9,7 @@ import {UserProvider} from "../Provider/UserProvider";
 import {LogoutPage} from "./Nav/Page/LogoutPage";
 import {LinkConstants} from "../_constants/link.constants";
 import {AlertProvider} from "../Provider/AlertProvider";
+import {NewPostPage} from "./Nav/Page/TechWatch/NewPostPage";
 
 
 const Root = () => (
@@ -18,9 +19,10 @@ const Root = () => (
                 <Router history={history}> <Route path="/" component={App}/>
                     <main>
                         <Route exact path={LinkConstants.POST_LIST} component={ListPage}/>
-                        <Route path={LinkConstants.LOGIN} component={LoginPage}/>
-                        <Route path={LinkConstants.LOGOUT} component={LogoutPage}/>
-                        <Route path={LinkConstants.REGISTER} component={RegisterContainer}/>
+                        <Route exact path={LinkConstants.LOGIN} component={LoginPage}/>
+                        <Route exact path={LinkConstants.LOGOUT} component={LogoutPage}/>
+                        <Route exact path={LinkConstants.REGISTER} component={RegisterContainer}/>
+                        <Route exact path={LinkConstants.POST_CREATE} component={NewPostPage}/>
                     </main>
                 </Router>
             </UserProvider>

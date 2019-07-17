@@ -65,15 +65,13 @@ export const PostProvider = ({children}) => {
                             posts: prevState.posts.filter(elem => elem._id !== item._id)
                         }
                     });
-                    console.log(state);
                     resolve();
                 });
             }).catch(err => {
-                console.log(err);
-                throw new Error('Impossible de suppr')
+                throw new Error('An error occured')
             });
         },
-        NewPost: (title) => {
+        NewPost: (title, link, description) => {
             return fetch(`${urlApi}/posts`, {
                 method: 'POST',
                 headers: {
@@ -83,9 +81,12 @@ export const PostProvider = ({children}) => {
                 },
                 mode: 'cors',
                 body: JSON.stringify({
-                    "title": title
+                    "title": title,
+                    "link": link,
+                    "description": description
                 })
             }).then(response =>{
+                console.log(response);
                 if (response.status !== 201) {
                     return Promise.reject(response);
                 } else {
