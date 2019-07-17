@@ -98,7 +98,7 @@ router.delete( '/:id', ( req, res, next ) => {
     Promise
         .resolve()
         .then(() => Post.remove({ _id: id }).exec())
-        .then(() => res.json({ action: true }))
+        .then(() => res.status(204).send({action : "ok"}))
         .catch(err => res.send(err));
 });
 
