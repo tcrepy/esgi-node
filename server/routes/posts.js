@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
         .resolve()
         .then(() => Post.find())
         .then(posts => res.status(200).send(posts))
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(500).send({"err" : err.toString()}));
 });
 /*
 router.get( '/', ( req, res, next ) => {
@@ -59,7 +59,7 @@ router.get('/upvote/:id', (req, res) => {
         { $inc: { "upvote": 1 } }
       ))
       .then(post => res.status(200).send(post))
-      .catch(err => res.status(500).send(err));
+      .catch(err => res.status(500).send({"err" : err.toString()}));
 });
 
 router.get('/:id', (req, res) => {
@@ -69,7 +69,7 @@ router.get('/:id', (req, res) => {
         .resolve()
         .then(() => Post.findById(id))
         .then(post => res.status(200).send(post))
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(500).send({"err" : err.toString()}));
 });
 
 router.post('/', (req, res) => {
@@ -89,7 +89,7 @@ router.post('/', (req, res) => {
             }
         })
         .then( post => res.status(201).json( post ) )
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(500).send({"err" : err.toString()}));
 });
 
 router.delete( '/:id', ( req, res, next ) => {
@@ -99,7 +99,7 @@ router.delete( '/:id', ( req, res, next ) => {
         .resolve()
         .then(() => Post.remove({ _id: id }).exec())
         .then(() => res.status(204).send({action : "ok"}))
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(500).send({"err" : err.toString()}));
 });
 
 

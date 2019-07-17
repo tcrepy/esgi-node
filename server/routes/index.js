@@ -72,7 +72,7 @@ router.get('/populate', (req, res) => {
             return Promise.all(promises)
         })
         .then(() => res.json({action: true}))
-        .catch(err => res.status(500).send(err));
+        .catch(err => res.status(500).send({"err" : err.toString()}));
 });
 
 router.post('/register', (req, res, next) => {
@@ -90,10 +90,7 @@ router.post('/register', (req, res, next) => {
             return res.status(201).send(user);
         })
         .then(user => res.json(user))
-        .catch(err => {
-            console.log(err)
-            res.status(500).json(err)
-        })
+        .catch(err => res.status(500).send({"err" : err.toString()}));
 });
 
 router.post('/login', (req, res) => {
