@@ -5,7 +5,7 @@ const verify = (req, res, next) => {
 
     const authHeader = req.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer')) {
-        return res.sendStatus(401);
+        return res.json({ "error" : "unauthorized" });
     }
     const token = authHeader.replace('Bearer ', '');
     verifyToken(token)

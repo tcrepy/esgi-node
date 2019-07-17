@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
         .catch(err => res.send(err));
 });
 
-router.get( '/search', ( req, res, next ) => {
+router.get( '/', ( req, res, next ) => {
     let limit = req.query.limit ? req.query.limit : 20
     let page = req.query.page ? req.query.page - 1 : 0
     let order = req.query.order || '-created_at'
