@@ -9,6 +9,9 @@ import {withAlert} from "../../Provider/AlertProvider";
 import List from "@material-ui/core/List";
 import {makeStyles} from '@material-ui/core/styles';
 import {useMemo} from "react";
+import {CreateButton} from "../Nav/CreateButton";
+import {PostProvider} from "../../Provider/PostProvider";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -41,6 +44,8 @@ export const PostsList = withAlert((alert) => {
                 context.posts.map((item, key) => <PostItem key={key} item={item} handleDelete={handleDelete}/>)
             }
         </ul>
-        }{context.fetched && context.posts.length === 0 && <div>No Records</div>} </List>, [context]
+        }{context.fetched && context.posts.length === 0 && <div>No Records</div>}
+        <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>
+        </List>, [context]
     )
 });

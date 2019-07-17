@@ -3,5 +3,7 @@ export const LinkConstants = {
     POST_CREATE: "/posts/new",
     LOGIN: "/login",
     LOGOUT: "/logout",
-    REGISTER: "/register"
+    REGISTER: "/register",
+    CATEGORY_LIST: "/categories/list",
+    CATEGORY_CREATE: "/categories/new"
 };

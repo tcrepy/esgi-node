@@ -1,5 +1,6 @@
 import config from '../config';
 import {authHeader} from "../_helper/auth-header";
+import {handleResponse} from "./Utils";
 
 const login = (username, password) => {
     const requestOptions = {
@@ -88,21 +89,4 @@ function _delete(id) {
     };
 
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
-}
-
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                logout();
-                // location.reload(true);
-            }
-            const error = (data && data.error) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
 }

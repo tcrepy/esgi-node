@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {AlertContext} from "../Context/AlertContext";
 import {alertConstants} from "../_constants/alert.constants";
-import {UserContext} from "../Context/UserContext";
 
 export const AlertProvider = ({children}) => {
     const [state, setState] = useState({
