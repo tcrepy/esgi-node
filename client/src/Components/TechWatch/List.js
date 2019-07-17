@@ -5,19 +5,20 @@ import {PostContext} from "../../Context/PostContext";
 import {useEffect} from "react";
 import {history} from "../../_helper/history";
 import {LinkConstants} from "../../_constants/link.constants";
+import {withAlert} from "../../Provider/AlertProvider";
 
-export const List = () => {
+export const List = withAlert((alert) => {
     const context = useContext(PostContext);
 
     useEffect(() => {
         context.fetchList().catch(err => {
-            console.log(err);
+            alert.error(err.toString());
             history.push(LinkConstants.LOGIN);
         });
     }, []);
 
     return (<>
-        {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
+            {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
         <ul>
             {
                 context.posts.map((item, key) => <ListItem key={key} item={item}/>)
@@ -25,4 +26,4 @@ export const List = () => {
         </ul>
         }{context.fetched && context.posts.length === 0 && <div>No Records</div>} </>
     )
-};
+});
