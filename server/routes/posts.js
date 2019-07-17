@@ -58,7 +58,7 @@ router.get('/upvote/:id', (req, res) => {
         {"_id" : id },
         { $inc: { "upvote": 1 } }
       ))
-      .then(post => res.send(post))
+      .then(post => res.status(200).send(post))
       .catch(err => res.send(err));
 });
 
