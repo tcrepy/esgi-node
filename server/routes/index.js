@@ -87,6 +87,9 @@ router.post('/register', (req, res, next) => {
         })
         .then(() => {
             let user = new User(req.body)
+            return user.save()
+        })
+        .then((user) => {
             return res.status(201).send(user);
         })
         .then(user => res.json(user))
