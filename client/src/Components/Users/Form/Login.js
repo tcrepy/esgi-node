@@ -64,7 +64,7 @@ export const SignIn = ({email, password, handleChange, handleSubmit, loggingIn})
                     <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus value={email} onChange={handleChange}/>
                     <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" value={password} onChange={handleChange}/>
                     <div className={classes.wrapper}>
-                        <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}> Sign In </Button> {loggingIn &&
+                        <Button disabled={loggingIn} type="submit" fullWidth variant="contained" color="primary" className={classes.submit}> Sign In </Button> {loggingIn &&
                     <CircularProgress size={24} className={classes.buttonProgress}/>}
                     </div>
                     <Grid container> <Grid item> <NavLink to="/register" variant="body2">

@@ -13,7 +13,7 @@ const initalState = {
     loggingIn: false
 };
 
-export const LoginContainer = withAlert(({success, error}) => {
+export const LoginContainer = withAlert(({success, error, warning}) => {
     const context = useContext(UserContext);
     const [state, setState] = useState(initalState);
 
@@ -40,6 +40,11 @@ export const LoginContainer = withAlert(({success, error}) => {
                     setState(initalState);
                     error(err.toString());
                 });
+        } else {
+            warning("You have to enter your mail and your password to continue");
+            setState(prevState => {
+                return {...prevState, submitted: false, loggingIn: false}
+            });
         }
     };
 
