@@ -27,6 +27,8 @@ const useStyles = makeStyles(theme => ({
 
 export const PostsList = withAlert((alert) => {
     const context = useContext(PostContext);
+    
+    console.log(alert.match.params.id)
 
     useEffect(() => {
         if (!localStorage.getItem('user')) {
