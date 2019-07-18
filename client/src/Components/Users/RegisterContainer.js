@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {Register} from "./Form/Register";
-import {UserContext} from "../../Context/UserContext";
+import {LoginContext} from "../../Context/LoginContext";
 import {alertConstants} from "../../_constants/alert.constants";
 import {withAlert} from "../../Provider/AlertProvider";
 import {LinkConstants} from "../../_constants/link.constants";
@@ -19,7 +19,7 @@ const initialState = {
 };
 
 export const RegisterContainer = withAlert(({alert}) => {
-    const context = useContext(UserContext);
+    const context = useContext(LoginContext);
     const [state, setState] = useState(initialState);
 
     const handleChange = (e) => {

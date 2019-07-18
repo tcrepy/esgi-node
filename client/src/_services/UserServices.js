@@ -1,6 +1,7 @@
 import config from '../config';
 import {authHeader} from "../_helper/auth-header";
 import {handleResponse} from "./Utils";
+import decode from 'jwt-decode';
 
 const login = (username, password) => {
     const requestOptions = {
@@ -14,10 +15,18 @@ const login = (username, password) => {
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
-
+            console.log(getCurrentUser());
             return user;
         });
-}
+};
+
+const getCurrentUser = () => {
+    const user = localStorage.getItem('user');
+    if (!user) {
+        return false;
+    }
+    return decode(JSON.parse(user).token);
+};
 
 export const userService = {
     login,
@@ -27,7 +36,8 @@ export const userService = {
     getById,
     update,
     delete: _delete,
-    checkConnexion
+    checkConnexion,
+    getCurrentUser
 };
 
 function checkConnexion() {

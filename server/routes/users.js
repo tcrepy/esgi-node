@@ -19,7 +19,16 @@ router.get('/:id', (req, res) => {
     Promise
         .resolve()
         .then(() => User.findById(id))
-        .then(user => res.status(200).send(user))
+        .then(user => {
+            console.log(user);
+            const {lastname, firstname, pseudo, email} = user;
+            return res.status(200).send({
+                lastname,
+                firstname,
+                pseudo,
+                email
+            })
+        })
         .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 

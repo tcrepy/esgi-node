@@ -36,9 +36,10 @@ import {NavLink} from "react-router-dom";
 import {LinkConstants} from "../../_constants/link.constants";
 import {Bookmark, Search, List as ListIcon} from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
-import {withUser} from "../../Provider/UserProvider";
+import {withUser} from "../../Provider/LoginProvider";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
+import {userService} from "../../_services/UserServices";
 
 const useStyles = makeStyles(theme => ({
     link: {
@@ -145,7 +146,7 @@ export const Header = withUser(({user}) => {
             vertical: 'top',
             horizontal: 'right'
         }} open={isMenuOpen} onClose={handleMenuClose}>
-            <MenuItem onClick={handleMenuClose}><NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>Profile</NavLink></MenuItem>
+            <MenuItem onClick={handleMenuClose}><NavLink className={classes.linkWhite} to={`${LinkConstants.USER_PROFIL}/${userService.getCurrentUser().id}`}>Profile</NavLink></MenuItem>
             <MenuItem onClick={handleMenuClose}><NavLink className={classes.linkWhite} to={LinkConstants.LOGOUT}>Log out</NavLink></MenuItem>
         </Menu>
     );

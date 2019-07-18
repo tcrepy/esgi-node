@@ -86,8 +86,9 @@ router.post('/register', (req, res, next) => {
             }
         })
         .then(() => {
-            let user = new User(req.body)
-            return res.status(201).send(user);
+            let user = new User(req.body);
+            user.register();
+            return res.sendStatus(201);
         })
         .then(user => res.json(user))
         .catch(err => res.status(500).send({"error" : err.toString()}));
@@ -96,8 +97,8 @@ router.post('/register', (req, res, next) => {
 router.post('/login', (req, res) => {
     User.login(req.body.email, req.body.password)
         .then(data => {
-            console.log(data)
             const token = createToken(data);
+
             res.status(201).send({token});
         })
         .catch(err => {

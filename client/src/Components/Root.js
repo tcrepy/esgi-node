@@ -3,7 +3,7 @@ import {Router, Route} from 'react-router-dom'
 import {App} from "./App";
 import {history} from "../_helper/history";
 import {RegisterContainer} from "./Users/RegisterContainer";
-import {UserProvider} from "../Provider/UserProvider";
+import {LoginProvider} from "../Provider/LoginProvider";
 import {LinkConstants} from "../_constants/link.constants";
 import {AlertProvider} from "../Provider/AlertProvider";
 import {LoginContainer} from "./Users/LoginContainer";
@@ -14,12 +14,14 @@ import {PostProvider} from "../Provider/PostProvider";
 import {PostsList} from "./TechWatch/PostsList";
 import {AddContainer} from "./TechWatch/AddContainer";
 import {CategoryCreate} from "./TechWatch/CategoryCreate";
+import {ProfilContainer} from "./Users/ProfilContainer";
+import {UserProvider} from "../Provider/UserProvider";
 
 
 const Root = () => (
     <div className="App">
         <AlertProvider>
-            <UserProvider>
+            <LoginProvider>
                 <Router history={history}> <Route path="/" component={App}/>
                     <main>
 
@@ -36,12 +38,13 @@ const Root = () => (
                         </PostProvider>
 
                         <CategoryProvider>
-                        <Route exact path={LinkConstants.CATEGORY_LIST} component={CategoriesList}/>
-                        <Route exact path={LinkConstants.CATEGORY_CREATE} component={CategoryCreate}/>
+                            <Route exact path={LinkConstants.CATEGORY_LIST} component={CategoriesList}/>
+                            <Route exact path={LinkConstants.CATEGORY_CREATE} component={CategoryCreate}/>
                         </CategoryProvider>
+                        <UserProvider><Route exact path={`${LinkConstants.USER_PROFIL}/:id`} component={ProfilContainer}/></UserProvider>
                     </main>
                 </Router>
-            </UserProvider>
+            </LoginProvider>
         </AlertProvider>
     </div>
 );

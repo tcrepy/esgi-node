@@ -1,6 +1,6 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {SignIn} from "./Form/Login";
-import {UserContext} from "../../Context/UserContext";
+import {LoginContext} from "../../Context/LoginContext";
 import {history} from "../../_helper/history";
 import {LinkConstants} from "../../_constants/link.constants";
 import {withAlert} from "../../Provider/AlertProvider";
@@ -14,7 +14,7 @@ const initalState = {
 };
 
 export const LoginContainer = withAlert(({success, error, warning}) => {
-    const context = useContext(UserContext);
+    const context = useContext(LoginContext);
     const [state, setState] = useState(initalState);
 
     const handleChange = (e) => {
