@@ -13,6 +13,9 @@ import FilledInput from "@material-ui/core/FilledInput";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import {CategoryContext} from "../../../Context/CategoryContext";
+import {BackButton} from "../../Nav/BackButton";
+import {LinkConstants} from "../../../_constants/link.constants";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -61,7 +64,8 @@ const useStyles = makeStyles(theme => ({
 export const AddForm = ({title, link, description, category, handleChange, handleSubmit, submitted, categories, title_validation, link_validation, category_validation}) => {
     const classes = useStyles();
     return (
-        <Container component="main" maxWidth="xs"> <CssBaseline/>
+        <Container component="main" maxWidth="xs"> <NavLink to={LinkConstants.POST_LIST}><BackButton/></NavLink>
+            <CssBaseline/>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}> <Assignment/> </Avatar>
                 <Typography component="h1" variant="h5"> New post </Typography>

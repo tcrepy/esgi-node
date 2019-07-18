@@ -10,6 +10,9 @@ import CircularProgress from "@material-ui/core/CircularProgress/index";
 import {red} from "@material-ui/core/colors/index";
 import {Bookmark} from "@material-ui/icons";
 import {GithubPicker} from 'react-color';
+import {LinkConstants} from "../../../_constants/link.constants";
+import {BackButton} from "../../Nav/BackButton";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -58,7 +61,9 @@ const useStyles = makeStyles(theme => ({
 export const CategoryForm = ({title, color, description, handleChange, handleSubmit, submitted, setColor}) => {
     const classes = useStyles();
     return (
-        <Container component="main" maxWidth="xs"> <CssBaseline/>
+        <Container component="main" maxWidth="xs">
+            <NavLink to={LinkConstants.CATEGORY_LIST}><BackButton/></NavLink>
+            <CssBaseline/>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}> <Bookmark/> </Avatar>
                 <Typography component="h1" variant="h5"> New Category </Typography>
