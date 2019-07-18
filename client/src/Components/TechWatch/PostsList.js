@@ -11,11 +11,16 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useMemo} from "react";
 import {CreateButton} from "../Nav/CreateButton";
 import {NavLink} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import {List as ListIcon} from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
+    },
+    title: {
+        paddingLeft: 40
     }
 }));
 
@@ -44,7 +49,11 @@ export const PostsList = withAlert((alert) => {
             .catch(err => alert.error(err.toString()));
     };
 
-    return useMemo(() => <List className={classes.root}>
+    return useMemo(() => <>
+        <Typography variant="h4" gutterBottom align="left" className={classes.title}>
+            Posts list
+        </Typography>
+        <List className={classes.root}>
             {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
         <ul>
             {
@@ -53,6 +62,6 @@ export const PostsList = withAlert((alert) => {
         </ul>
         }{context.fetched && context.posts.length === 0 && <div>No Records</div>}
         <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>
-        </List>, [context]
+        </List></>, [context]
     )
 });
