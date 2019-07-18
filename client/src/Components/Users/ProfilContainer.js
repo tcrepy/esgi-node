@@ -11,6 +11,6 @@ export const ProfilContainer = withAlert(({error, ...props}) => {
             context.getById(props.match.params.id).catch(err => error(err.toString()));
         }, [props.match.params.id]);
 
-        return useMemo(() => <Profil user={context.user}/>, [context]);
+    return useMemo(() => <React.Fragment>{context.user.email && <Profil user={context.user}/>}</React.Fragment>, [context]);
     }
 );
