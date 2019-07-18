@@ -170,7 +170,7 @@ export const Header = withUser(({user}) => {
                         <ListItemText primary='Posts' />
                     </ListItem>
                 </NavLink>
-                <NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>
+                <NavLink className={classes.linkWhite} to={LinkConstants.CATEGORY_LIST}>
                     <ListItem button key='Categories'>
                         <ListItemIcon><BookmarksIcon /></ListItemIcon>
                         <ListItemText primary='Categories' />

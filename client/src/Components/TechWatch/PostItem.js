@@ -2,6 +2,7 @@ import React from "react";
 import {Actions} from "./action/Actions";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Button from '@material-ui/core/Button';
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -33,6 +34,9 @@ export const PostItem = ({item, handleDelete}) => {
 
                     </Typography>
                     {item.description}
+                    <div>
+                        {item.categories.map(c => <Button variant="outlined" color="primary">{c}</Button>)}
+                    </div>
                 </React.Fragment>
             }
         />

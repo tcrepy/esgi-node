@@ -27,17 +27,17 @@ export const CategoryItem = ({item}) => {
             }
         }));
     }
+
     const classes = useStyles();
     const classesColor = CustomColor(item.color);
     return <ListItem alignItems="center" className={classesColor.customColor}>
         <ListItemText
-            primary={item.title}
+            primary={<a href={item.link}>{item.title}</a>}
             secondary={
                 <React.Fragment>
                     {item.description}
                 </React.Fragment>
             }
         />
-        <Actions item={item}/>
     </ListItem>
 };

@@ -1,5 +1,6 @@
 export const LinkConstants = {
     POST_LIST: "/list",
+    POST_LIST_CATEGORY: "/list/:id",
     POST_CREATE: "/posts/new",
     LOGIN: "/login",
     LOGOUT: "/logout",

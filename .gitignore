@@ -3,3 +3,4 @@
 /client/node_modules
 /SampleCollections
 package-lock.json
+node_modules

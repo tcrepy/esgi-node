@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export const CategoriesList = withAlert((alert) => {
     const context = useContext(CategoryContext);
+
     useEffect(() => {
         context.getCategories().then(console.log).catch(err => {
             alert.error(err.toString());
