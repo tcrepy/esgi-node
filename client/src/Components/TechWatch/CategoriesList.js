@@ -12,6 +12,7 @@ import {CategoryContext} from "../../Context/CategoryContext";
 import {NavLink} from "react-router-dom";
 import {CreateButton} from "../Nav/CreateButton";
 import {CategoryItem} from "./CategoryItem";
+import {Container} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,7 +31,7 @@ export const CategoriesList = withAlert((alert) => {
     }, []);
     const classes = useStyles();
 
-    return useMemo(() => <List className={classes.root}>
+    return useMemo(() => <Container maxWidth="md"><List className={classes.root}>
             {!context.fetched && <div>Loading</div>} {context.fetched && context.categories.length > 0 &&
         <ul>
             {
@@ -39,6 +40,6 @@ export const CategoriesList = withAlert((alert) => {
         </ul>
         }{context.fetched && context.categories.length === 0 && <div>No Records</div>}
             <NavLink to={LinkConstants.CATEGORY_CREATE}><CreateButton/></NavLink>
-        </List>, [context.categories, context.fetched]
+        </List></Container>, [context.categories, context.fetched]
     )
 });

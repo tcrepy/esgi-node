@@ -13,6 +13,7 @@ import {CreateButton} from "../Nav/CreateButton";
 import {NavLink} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import {List as ListIcon} from "@material-ui/icons";
+import {Container} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -49,7 +50,7 @@ export const PostsList = withAlert((alert) => {
             .catch(err => alert.error(err.toString()));
     };
 
-    return useMemo(() => <>
+    return useMemo(() => <Container maxWidth="md">
         <Typography variant="h4" gutterBottom align="left" className={classes.title}>
             Posts list
         </Typography>
@@ -62,6 +63,6 @@ export const PostsList = withAlert((alert) => {
         </ul>
         }{context.fetched && context.posts.length === 0 && <div>No Records</div>}
         <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>
-        </List></>, [context]
+        </List></Container>, [context]
     )
 });
