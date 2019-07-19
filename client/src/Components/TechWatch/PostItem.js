@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Avatar from "@material-ui/core/Avatar";
 import user from "../../assets/img/user.svg";
+import {CategoryPanel} from "./Components/CategoryPanel";
 
 const useStyles = makeStyles(theme => ({
     inline: {
@@ -15,11 +16,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const PostItem = ({item, handleDelete}) => {
+    console.log(item);
     const classes = useStyles();
     return <ListItem alignItems="center">
-        <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={user} />
-        </ListItemAvatar>
         <ListItemText
             primary={<a href={item.link} target="_blank">{item.title}</a>}
             secondary={
@@ -36,6 +35,11 @@ export const PostItem = ({item, handleDelete}) => {
                 </React.Fragment>
             }
         />
-        <Actions item={item} handleDelete={handleDelete}/>
+        {
+            item.categories.map((category, key) => {
+                category = JSON.parse(category);
+                return <CategoryPanel key={key} category={category}/>
+            })
+        }
     </ListItem>
 };

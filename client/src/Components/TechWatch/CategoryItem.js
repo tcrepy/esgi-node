@@ -14,30 +14,19 @@ const useStyles = makeStyles(theme => ({
     },
     color: {
         backgroundColor: "#fe232a"
+    },
+    customColor: {
+        backgroundColor: props => props.color
     }
 }));
 
 
-
 export const CategoryItem = ({item}) => {
-    const CustomColor = color => {
-        return makeStyles(theme => ({
-            customColor: {
-                backgroundColor: color
-            }
-        }));
-    }
-    const classes = useStyles();
-    const classesColor = CustomColor(item.color);
-    return <ListItem alignItems="center" className={classesColor.customColor}>
-        <ListItemText
-            primary={item.title}
-            secondary={
-                <React.Fragment>
-                    {item.description}
-                </React.Fragment>
-            }
-        />
-        <Actions item={item}/>
-    </ListItem>
+    const classes = useStyles(item);
+    return <ListItem alignItems="center" className={classes.customColor}>
+        <ListItemText primary={item.title} secondary={
+            <React.Fragment>
+                {item.description}
+            </React.Fragment>
+        }/> <Actions item={item}/> </ListItem>
 };
