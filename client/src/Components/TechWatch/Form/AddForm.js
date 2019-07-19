@@ -79,7 +79,7 @@ export const AddForm = ({title, link, description, category, handleChange, handl
                         },
                     }}>
                         {categories.map((value, key) =>
-                            <MenuItem key={key} value={JSON.stringify(value)}> {value.title} </MenuItem>)}
+                            <MenuItem key={key} value={value}> {value.title} </MenuItem>)}
                     </TextField>
 
                     <div className={classes.wrapper}>

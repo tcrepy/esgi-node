@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const PostItem = ({item, handleDelete}) => {
-    console.log(item);
     const classes = useStyles();
     return <ListItem alignItems="center">
         <ListItemText
@@ -33,17 +32,9 @@ export const PostItem = ({item, handleDelete}) => {
 
                     </Typography>
                     {item.description}
-                    <div>
-                        {item.categories.map(c => <Button variant="outlined" color="primary">{c}</Button>)}
-                    </div>
                 </React.Fragment>
             }
         />
-        {
-            item.categories.map((category, key) => {
-                category = JSON.parse(category);
-                return <CategoryPanel key={key} category={category}/>
-            })
-        }
+        <CategoryPanel category={item.categories}/>
     </ListItem>
 };

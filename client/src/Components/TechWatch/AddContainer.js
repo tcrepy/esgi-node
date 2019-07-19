@@ -29,7 +29,7 @@ export const AddContainer = withAlert(({success, error}) => {
 
     useEffect(() => {
         catContext.getCategories().catch(err => {
-            alert.error(err.toString());
+            error(err.toString());
             history.push(LinkConstants.LOGIN);
         });
     }, []);
@@ -39,7 +39,7 @@ export const AddContainer = withAlert(({success, error}) => {
         setSubmitted(true);
         const {title, link, description, category} = state;
         if (check()) {
-            context.NewPost(title, link, description, [category]).then(() => {
+            context.NewPost(title, link, description, category).then(() => {
                 success('A new post has been added');
                 history.push(LinkConstants.POST_LIST);
             }).catch(err => {
