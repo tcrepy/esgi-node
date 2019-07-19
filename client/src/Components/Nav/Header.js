@@ -35,11 +35,22 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {NavLink} from "react-router-dom";
 import {LinkConstants} from "../../_constants/link.constants";
 import {Bookmark, Search, List as ListIcon} from "@material-ui/icons";
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import HomeIcon from '@material-ui/icons/Home';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
+import CommentIcon from '@material-ui/icons/Comment';
+import PersonIcon from '@material-ui/icons/Person';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Divider from '@material-ui/core/Divider';
+import {ListItem, ListItemIcon, ListItemText, List}  from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import {withUser} from "../../Provider/LoginProvider";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import {userService} from "../../_services/UserServices";
+import Drawer from '@material-ui/core/Drawer';
+
 
 const useStyles = makeStyles(theme => ({
     link: {
@@ -110,6 +121,12 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
+    list: {
+        width: 250,
+    },
+    fullList: {
+    width: 'auto',
+    },
 }));
 
 export const Header = withUser(({user}) => {
@@ -119,6 +136,69 @@ export const Header = withUser(({user}) => {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const [state, setState] = React.useState({
+        left: false,
+    });
+
+    const toggleDrawer = (side, open) => event => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setState({ ...state, [side]: open });
+    };
+
+    const sideList = side => (
+        <div
+            className={classes.list}
+            role="presentation"
+            onClick={toggleDrawer(side, false)}
+            onKeyDown={toggleDrawer(side, false)}
+        >
+            <List>
+
+                <NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>
+                    <ListItem button key='Home'>
+                        <ListItemIcon><HomeIcon /></ListItemIcon>
+                        <ListItemText primary='Home' />
+                    </ListItem>
+                </NavLink>
+                <NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>
+                    <ListItem button key='Posts'>
+                        <ListItemIcon><CommentIcon /></ListItemIcon>
+                        <ListItemText primary='Posts' />
+                    </ListItem>
+                </NavLink>
+                <NavLink className={classes.linkWhite} to={LinkConstants.CATEGORY_LIST}>
+                    <ListItem button key='Categories'>
+                        <ListItemIcon><BookmarksIcon /></ListItemIcon>
+                        <ListItemText primary='Categories' />
+                    </ListItem>
+                </NavLink>
+                <Divider/>
+                <NavLink className={classes.linkWhite} to={LinkConstants.LOGIN}>
+                    <ListItem button key='Login'>
+                        <ListItemIcon><PersonIcon /></ListItemIcon>
+                        <ListItemText primary='Login' />
+                    </ListItem>
+                </NavLink>
+                <NavLink className={classes.linkWhite} to={LinkConstants.REGISTER}>
+                    <ListItem button key='Register'>
+                        <ListItemIcon><PersonAddIcon /></ListItemIcon>
+                        <ListItemText primary='Register' />
+                    </ListItem>
+                </NavLink>
+            </List>
+
+
+            <NavLink className={classes.link} to={LinkConstants.LOGIN}><Button color="inherit">Login</Button></NavLink>
+            <NavLink className={classes.link} to={LinkConstants.REGISTER}><Button color="inherit">Register</Button></NavLink>
+            <NavLink className={classes.link} to={LinkConstants.POST_LIST}><ListIcon/></NavLink>
+            <NavLink className={classes.link} to={LinkConstants.CATEGORY_LIST}><Bookmark/></NavLink>
+            <NavLink className={classes.link} to={LinkConstants.POST_LIST}>TechWatch</NavLink>
+        </div>
+    );
 
     function handleProfileMenuOpen(event) {
         setAnchorEl(event.currentTarget);
@@ -156,8 +236,14 @@ export const Header = withUser(({user}) => {
         <div className={classes.grow}>
             <AppBar position="static"> <Toolbar>
                 <div className={classes.sectionMobile}>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Open drawer">
+                    <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="Open drawer">
                         <MenuIcon/> </IconButton></div>
+                <div>
+                    <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
+                        {sideList('left')}
+
+                    </Drawer>
+                </div>
                 {/*TODO::include sidebar with Drawer component*/}
                 <Typography className={classes.title} variant="h6" noWrap>
                     <NavLink className={classes.link} to={LinkConstants.POST_LIST}>TechWatch</NavLink> </Typography>
