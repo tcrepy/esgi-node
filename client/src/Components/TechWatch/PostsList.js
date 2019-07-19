@@ -14,48 +14,41 @@ import {NavLink} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import {List as ListIcon} from "@material-ui/icons";
 import {Container} from "@material-ui/core";
+import CardHeader from "@material-ui/core/CardHeader";
 
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
-    },
-    title: {
-        paddingLeft: 40
     }
 }));
 
-export const PostsList = withAlert((alert) => {
+export const PostsList = withAlert((props) => {
     const context = useContext(PostContext);
-    
-    console.log(alert.match.params.id)
-
     useEffect(() => {
         if (!localStorage.getItem('user')) {
-            alert.error('You need to be connect to access to this page');
+            props.error('You need to be connect to access to this page');
             history.push(LinkConstants.LOGIN);
         }
     });
     useEffect(() => {
-        context.fetchList().catch(err => {
-            alert.error(err.toString());
+        context.fetchList(props.category ? props.category._id : null).catch(err => {
+            props.error(err.toString());
             history.push(LinkConstants.LOGIN);
         });
-    }, []);
+    }, [props.category]);
 
     const classes = useStyles();
 
     const handleDelete = (e, item) => {
         e.preventDefault();
         context.DeletePost(item)
-            .then(() => alert.success('Post has been well deleted'))
-            .catch(err => alert.error(err.toString()));
+            .then(() => props.success('Post has been well deleted'))
+            .catch(err => props.error(err.toString()));
     };
 
     return useMemo(() => <Container maxWidth="md">
-        <Typography variant="h4" gutterBottom align="left" className={classes.title}>
-            Posts list
-        </Typography>
+        {!props.category && <CardHeader title="Post list" align="center"/>}
         <List className={classes.root}>
             {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
         <ul>

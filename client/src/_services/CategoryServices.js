@@ -1,5 +1,6 @@
 import config from "../config";
 import {fetchHeaders, handleResponse} from "./Utils";
+import {authHeader} from "../_helper/auth-header";
 
 const route = `${config.apiUrl}/categories`;
 
@@ -26,7 +27,17 @@ const save = (title, description, color) => {
     return fetch(`${route}/`, requestOptions).then(handleResponse);
 }
 
+const getById = (id) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${route}/${id}`, requestOptions).then(handleResponse);
+}
+
 export const categoryServices = {
     getAll,
-    save
+    save,
+    getById
 };

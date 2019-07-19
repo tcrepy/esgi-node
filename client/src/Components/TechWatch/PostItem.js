@@ -1,23 +1,24 @@
 import React from "react";
-import {Actions} from "./action/Actions";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Button from '@material-ui/core/Button';
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Avatar from "@material-ui/core/Avatar";
-import user from "../../assets/img/user.svg";
 import {CategoryPanel} from "./Components/CategoryPanel";
+import {LinkConstants} from "../../_constants/link.constants";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     inline: {
         display: 'inline',
     },
+    link: {
+        textDecoration: "none"
+    }
 }));
 
 export const PostItem = ({item, handleDelete}) => {
     const classes = useStyles();
+    console.log(item.categories);
     return <ListItem alignItems="center">
         <ListItemText
             primary={<a href={item.link} target="_blank">{item.title}</a>}
@@ -35,6 +36,6 @@ export const PostItem = ({item, handleDelete}) => {
                 </React.Fragment>
             }
         />
-        <CategoryPanel category={item.categories}/>
+        <NavLink className={classes.link} to={`${LinkConstants.POST_LIST_CATEGORY}/${item.categories._id}`}><CategoryPanel category={item.categories}/></NavLink>
     </ListItem>
 };

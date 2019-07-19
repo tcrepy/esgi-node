@@ -8,7 +8,11 @@ const PostSchema = mongoose.Schema({
     description: String,
     link: String,
     user: {type: Schema.Types.ObjectId, ref: 'User'},
-    categories: {id: String, title: String, color: String},
+    categories: {
+        _id: String,
+        title: String,
+        color: String
+    },
     created_at: {type: Date, default: Date.now},
     upvote: {type: Number, default: 0}
 });

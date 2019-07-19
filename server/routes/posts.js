@@ -4,12 +4,15 @@ const router = express.Router();
 const Pagination = require('../lib/Pagination')
 
 router.get('/', (req, res) => {
-
+    let filter = {};
+    if (req.query.category) {
+        filter = {"categories._id": req.query.category};
+    }
     Promise
         .resolve()
-        .then(() => Post.find())
+        .then(() => Post.find(filter))
         .then(posts => res.status(200).send(posts))
-        .catch(err => res.status(500).send({"error" : err.toString()}));
+        .catch(err => res.status(500).send({"error": err.toString()}));
 });
 /*
 router.get( '/', ( req, res, next ) => {

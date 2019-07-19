@@ -9,7 +9,10 @@ export const PostProvider = ({children}) => {
     const [state, setState] = useState({
         posts: [],
         fetched: false,
-        fetchList: () => {
+        fetchList: (category_id = null) => {
+            setState(prevState => {
+                return {...prevState, fetched: false}
+            });
             const requestOptions = {
                 method: 'GET',
                 headers: {
@@ -19,7 +22,11 @@ export const PostProvider = ({children}) => {
                 },
                 mode: 'cors'
             };
-            return fetch(`${urlApi}/posts`, requestOptions)
+            let url = `${urlApi}/posts`;
+            if (category_id) {
+                url += `?category=${category_id}`;
+            }
+            return fetch(`${url}`, requestOptions)
                 .then(response => {
                     if (response.status !== 200) {
                         throw new Error('Error !');

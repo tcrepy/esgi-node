@@ -16,6 +16,7 @@ import {AddContainer} from "./TechWatch/AddContainer";
 import {CategoryCreate} from "./TechWatch/CategoryCreate";
 import {ProfilContainer} from "./Users/ProfilContainer";
 import {UserProvider} from "../Provider/UserProvider";
+import {PostByCategory} from "./TechWatch/PostByCategory";
 
 
 const Root = () => (
@@ -34,7 +35,7 @@ const Root = () => (
                         <Route exact path={LinkConstants.POST_LIST} component={PostsList}/>
                             <CategoryProvider>
                                 <Route exact path={LinkConstants.POST_CREATE} component={AddContainer}/>
-                                <Route exact path={LinkConstants.POST_LIST_CATEGORY} component={PostsList}/>
+                                <Route exact path={`${LinkConstants.POST_LIST_CATEGORY}/:id`} component={PostByCategory}/>
                             </CategoryProvider>
                         </PostProvider>
 

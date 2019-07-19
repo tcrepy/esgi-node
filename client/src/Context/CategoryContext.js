@@ -5,5 +5,6 @@ export const CategoryContext = createContext({
     fetched: true,
     getCategories: () => {},
     newCategory: () => {},
-    deleteCategory: () => {}
+    deleteCategory: () => {},
+    getById: () => {}
 });

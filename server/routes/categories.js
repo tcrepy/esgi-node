@@ -3,7 +3,6 @@ const Category = require('../Models/CategorySchema');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-
     Promise
         .resolve()
         .then(() => Category.find())

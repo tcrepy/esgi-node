@@ -5,6 +5,7 @@ import {categoryServices} from "../_services/CategoryServices";
 export const CategoryProvider = ({children}) => {
     const [state, setState] = useState({
         categories: [],
+        category: {},
         fetched: true,
         getCategories: () => {
             return categoryServices.getAll()
@@ -31,6 +32,15 @@ export const CategoryProvider = ({children}) => {
                 )
         },
         deleteCategory: () => {
+        },
+        getById: (id) => {
+            return categoryServices.getById(id).then(category => {
+                setState(prevState => {
+                    return {...prevState, category: category}
+                });
+            }, err => {
+                throw new Error(err.toString());
+            })
         }
     });
 
