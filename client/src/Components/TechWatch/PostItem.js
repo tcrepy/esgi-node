@@ -6,6 +6,8 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import {CategoryPanel} from "./Components/CategoryPanel";
 import {LinkConstants} from "../../_constants/link.constants";
 import {NavLink} from "react-router-dom";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles(theme => ({
     inline: {
@@ -19,6 +21,14 @@ const useStyles = makeStyles(theme => ({
 export const PostItem = ({item, handleDelete}) => {
     const classes = useStyles();
     return <ListItem alignItems="center">
+        <ListItemAvatar>
+            <Avatar alt="Remy Sharp" src={item.user.image} />
+            <ListItemText
+                primary={item.user.pseudo}
+            />
+        </ListItemAvatar>
+
+
         <ListItemText
             primary={<a href={item.link} target="_blank">{item.title}</a>}
             secondary={
