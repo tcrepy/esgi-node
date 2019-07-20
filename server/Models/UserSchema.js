@@ -42,7 +42,7 @@ UserSchema.methods.register = function() {
 
 UserSchema.statics.login = function (email, password) {
     return new Promise((resolve, reject) => {
-        User.findOne({email}).then(user => {
+        this.findOne({email}).then(user => {
             console.log("user", user)
             if (!user) return reject('User not found');
             bcrypt.compare(password, user.password)
@@ -52,5 +52,29 @@ UserSchema.statics.login = function (email, password) {
         })
     })
 };
-const User = db.model('User', UserSchema);
-module.exports = User;
+
+class User {
+
+    testIsValid(){
+
+        let motifs = []
+
+        if(!this.firstname || this.firstname == "")
+          motifs.push('pas de prenom')
+        if(!this.lastname || this.lastname == "")
+          motifs.push('pas de nom')
+        if(!this.pseudo || this.pseudo == "")
+          motifs.push('pas de pseudo')
+        if(!this.image || this.image == "")
+          motifs.push('pas d image')
+
+        if(motifs.length > 0) return false
+        else return true
+    }
+
+}
+
+UserSchema.loadClass(User)
+
+const UserModel = db.model('User', UserSchema);
+module.exports = UserModel;

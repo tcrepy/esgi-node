@@ -7,7 +7,7 @@ const PostSchema = mongoose.Schema({
     title: String,
     description: String,
     link: String,
-    user: {type: Schema.Types.ObjectId, ref: 'User'},
+    user: { type: mongoose.Schema.Types.Mixed, default: {} },
     categories: {
         _id: String,
         title: String,
@@ -18,6 +18,33 @@ const PostSchema = mongoose.Schema({
 });
 
 class Post {
+
+    testIsValid(){
+
+        let motifs = []
+
+        if(!this.title || this.title == "")
+          motifs.push('pas de titre')
+        if(!this.description || this.description == "")
+          motifs.push('pas de description')
+        if(!this.link || this.link == "")
+          motifs.push("pas de lien vers l'article")
+        if(!this.categories)
+          motifs.push('pas de category')
+        if(this.categories && !/^[A-F0-9]{6}$/i.exec(this.categories.color))
+          motifs.push('couleur pas hexadecimal')
+        if(!this.user)
+          motifs.push('pas duser')
+        if(this.user && !this.user.pseudo)
+          motifs.push('user de pseudo')
+        if(!this.upvote)
+          motifs.push('pas de vote')
+        if(this.upvote < 0)
+          motifs.push("pas de vote négatif")
+
+        if(motifs.length > 0) return false
+        else return true
+    }
     // -------------------------
     // Permet de faire une recherche avancée
     // sur les annonces
@@ -40,6 +67,9 @@ class Post {
                     case 'title':
                         let reg = new RegExp(value, 'ig')
                         search.description = reg
+                        break
+                    case 'category':
+                        search["categories._id"] = value
                         break
                 }
             })

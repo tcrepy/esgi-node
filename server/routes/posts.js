@@ -3,23 +3,11 @@ const Post = require('../Models/PostSchema');
 const router = express.Router();
 const Pagination = require('../lib/Pagination')
 
-router.get('/', (req, res) => {
-    let filter = {};
-    if (req.query.category) {
-        filter = {"categories._id": req.query.category};
-    }
-    Promise
-        .resolve()
-        .then(() => Post.find(filter))
-        .then(posts => res.status(200).send(posts))
-        .catch(err => res.status(500).send({"error": err.toString()}));
-});
-/*
 router.get( '/', ( req, res, next ) => {
     let limit = req.query.limit ? req.query.limit : 20
     let page = req.query.page ? req.query.page - 1 : 0
     let order = req.query.order || '-created_at'
-    let searchQuery = req.query.search || {}
+    let searchQuery = req.query || {}
 
     Promise.resolve()
       // On construit l'objet de recherche
@@ -38,20 +26,12 @@ router.get( '/', ( req, res, next ) => {
         ] )
       )
       .then( ( [ count, list ] ) => {
-        // On retourne la liste
-        res.json( {
-          posts: list,
-          paging: new Pagination( {
-            search: searchQuery,
-            current: page + 1,
-            limit: limit,
-            count: count,
-          } ),
-        } )
+        res.status(200).send(list)
+      })
+      .catch(err => res.status(500).send({"error": err.toString()}));
       } )
-      .catch( next )
-  } )
-*/
+
+
 router.get('/upvote/:id', (req, res) => {
   const id = req.params.id
 
