@@ -48,7 +48,6 @@ export const PostsList = withAlert((props) => {
     };
 
     return useMemo(() => <Container maxWidth="md">
-        {!props.category && <CardHeader title="Post list" align="center"/>}
         <List className={classes.root}>
             {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
         <ul>

@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => ({
 
 export const PostItem = ({item, handleDelete}) => {
     const classes = useStyles();
-    console.log(item.categories);
     return <ListItem alignItems="center">
         <ListItemText
             primary={<a href={item.link} target="_blank">{item.title}</a>}

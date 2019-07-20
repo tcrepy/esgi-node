@@ -16,6 +16,7 @@ const createToken = (user = {}) => {
 const verifyToken = (token) => {
     return new Promise((resolve, reject) => {
         jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+            console.log(err, decodedToken);
             if (err || !decodedToken) reject(err);
             resolve(decodedToken);
         })
