@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
-
-/*mongoose.connect("mongodb://localhost:27017/SampleCollection", {
+/*
+mongoose.connect("mongodb://localhost:27017/SampleCollection", {
     useNewUrlParser: true,
   });
- */
+*/
+
+
 mongoose.connect('mongodb://mongo', {
     user: process.env.MONGODB_USER,
     pass: process.env.MONGODB_PASS,

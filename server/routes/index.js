@@ -4,6 +4,7 @@ const express = require('express');
 const User = require('../Models/UserSchema');
 const Post = require('../Models/PostSchema');
 const Category = require('../Models/CategorySchema');
+const Tuto = require('../Models/TutoSchema');
 const router = express.Router();
 
 //Cette route est utilisée pour savoir si l'utilisateur est bien connecté
@@ -92,7 +93,6 @@ router.post('/register', (req, res, next) => {
         .then((user) => {
             return res.status(201).send(user);
         })
-        .then(user => res.json(user))
         .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
@@ -103,7 +103,6 @@ router.post('/login', (req, res) => {
             res.status(201).send({token});
         })
         .catch(err => {
-            console.log(err);
             if (err === "User not found" || err === "wrong password") {
                 res.status(400).send({
                     error: 'Wrong user or password'
@@ -114,6 +113,17 @@ router.post('/login', (req, res) => {
                 })
             }
         });
+});
+
+router.get('/flush', (req, res) => {
+    return Promise.all([
+        Tuto.remove( { } ).exec(),
+        Post.remove( { } ).exec(),
+        Category.remove( { } ).exec(),
+        User.remove( { } ).exec()
+    ])
+    .then(() => res.status(204).send({action : "ok"}))
+    .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 module.exports = router;

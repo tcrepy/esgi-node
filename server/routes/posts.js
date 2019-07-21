@@ -37,7 +37,7 @@ router.get('/upvote/:id', (req, res) => {
 
   Promise
       .resolve()
-      .then(() => Post.update(
+      .then(() => Post.updateOne(
         {"_id" : id },
         { $inc: { "upvote": 1 } }
       ))
@@ -76,13 +76,27 @@ router.post('/', (req, res) => {
 });
 
 router.delete( '/:id', ( req, res, next ) => {
-    const id = req.params.id
+  const id = req.params.id
 
-    Promise
-        .resolve()
-        .then(() => Post.remove({ _id: id }).exec())
-        .then(() => res.status(204).send({action : "ok"}))
-        .catch(err => res.status(500).send({"error" : err.toString()}));
+  Promise
+      .resolve()
+      .then(() => Post.remove({ _id: id }).exec())
+      .then(() => res.status(204).send({action : "ok"}))
+      .catch(err => res.status(500).send({"error" : err.toString()}));
+});
+
+router.put( '/:id', ( req, res, next ) => {
+    const id = req.params.id
+    const authorizedFields = [
+      'title',
+      'description',
+      '_id'
+    ]
+
+    Promise.resolve()
+      .then(() => Post.updateOne({_id : id}, req.body, { authorizedFields }))
+      .then(post => res.status(200).send(post))
+      .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 
