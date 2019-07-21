@@ -8,6 +8,7 @@ import {LinkConstants} from "../../_constants/link.constants";
 import {NavLink} from "react-router-dom";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
+import {red} from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
     inline: {
@@ -15,17 +16,24 @@ const useStyles = makeStyles(theme => ({
     },
     link: {
         textDecoration: "none"
-    }
+    },
+    avatar: {
+        backgroundColor: red[500],
+    },
 }));
 
 export const PostItem = ({item, handleDelete}) => {
     const classes = useStyles();
     return <ListItem alignItems="center">
         <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={item.user.image} />
-            <ListItemText
-                primary={item.user.pseudo}
-            />
+            <Avatar aria-label="Recipe" className={classes.avatar}>
+                PS
+                {/*{user.pseudo.toUpperCase().substr(0,1)}*/}
+            </Avatar>
+            {/*<Avatar alt="Remy Sharp" src={item.user.image} />*/}
+            {/*<ListItemText*/}
+            {/*    primary={item.user.pseudo}*/}
+            {/*/>*/}
         </ListItemAvatar>
 
 
@@ -45,6 +53,6 @@ export const PostItem = ({item, handleDelete}) => {
                 </React.Fragment>
             }
         />
-        <NavLink className={classes.link} to={`${LinkConstants.POST_LIST_CATEGORY}/${item.categories._id}`}><CategoryPanel category={item.categories}/></NavLink>
+        <CategoryPanel category={item.categories}/>
     </ListItem>
 };
