@@ -105,27 +105,40 @@ router.post('/', (req, res) => {
         .catch(err => res.status(500).send({error: err.toString()}));
 });
 
-router.delete( '/:id', ( req, res, next ) => {
-  const id = req.params.id
+router.delete('/:id', (req, res, next) => {
+    const id = req.params.id
+    const client = new elasticsearch.Client({
+        host: 'http://elasticsearch:9200',
+        log: 'trace',
+        node: 'http://elastic:changeme@elasticsearch:9200'
+    });
 
-  Promise
-      .resolve()
-      .then(() => Post.remove({ _id: id }).exec())
-      .then(() => res.status(204).send({action : "ok"}))
-      .catch(err => res.status(500).send({"error" : err.toString()}));
+    client.delete({
+        index: "posts",
+        id: id
+    }).then(() => {
+        Promise
+            .resolve()
+            .then(() => Post.remove({_id: id}).exec())
+            .then(() => res.status(204).send({action: "ok"}))
+            .catch(err => res.status(500).send({"error": err.toString()}));
+    }).catch(e => {
+        console.log(e);
+        return res.status(500).send({"error": e.toString()});
+    });
 });
 
-router.put( '/:id', ( req, res, next ) => {
+router.put('/:id', (req, res, next) => {
     const id = req.params.id
     const authorizedFields = [
-      'title',
-      'description',
-      '_id'
-    ]
+        'title',
+        'description',
+        '_id'
+    ];
     Promise.resolve()
-      .then(() => Post.updateOne({_id : id}, req.body, { authorizedFields }))
-      .then(post => res.status(200).send(post))
-      .catch(err => res.status(500).send({"error" : err.toString()}));
+        .then(() => Post.updateOne({_id: id}, req.body, {authorizedFields}))
+        .then(post => res.status(200).send(post))
+        .catch(err => res.status(500).send({"error": err.toString()}));
 
 });
 
