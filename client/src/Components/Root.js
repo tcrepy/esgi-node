@@ -24,22 +24,18 @@ const Root = () => (
     <div className="App">
         <AlertProvider>
             <LoginProvider>
-                <Router history={history}> <Route path="/" component={App}/>
+                <Router history={history}>
                     <main>
-
+                        <PostProvider>
+                            <CategoryProvider>
+                                <Route path="/" component={App}/>
+                                <Route exact path={LinkConstants.POST_LIST} component={Posts}/>
+                                <Route exact path={LinkConstants.POST_CREATE} component={AddContainer}/>
+                            </CategoryProvider>
+                        </PostProvider>
                         <Route exact path={LinkConstants.LOGIN} component={LoginContainer}/>
                         <Route exact path={LinkConstants.LOGOUT} component={LogoutContainer}/>
                         <Route exact path={LinkConstants.REGISTER} component={RegisterContainer}/>
-
-
-                        <PostProvider>
-                            <CategoryProvider>
-                                <Route exact path={LinkConstants.POST_LIST} component={Posts}/>
-                                <Route exact path={LinkConstants.POST_CREATE} component={AddContainer}/>
-                                {/*<Route exact path={`${LinkConstants.POST_LIST_CATEGORY}/:id`} component={PostByCategory}/>*/}
-                            </CategoryProvider>
-                        </PostProvider>
-
                         <CategoryProvider>
                             <Route exact path={LinkConstants.CATEGORY_LIST} component={CategoriesList}/>
                             <Route exact path={LinkConstants.CATEGORY_CREATE} component={CategoryCreate}/>

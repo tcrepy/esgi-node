@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useMemo} from "react";
 import {CategoryContext} from "../../Context/CategoryContext";
 import {makeStyles} from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
@@ -35,21 +35,20 @@ const useStyles = makeStyles(theme => ({
 export const Posts = withAlert(({error}) => {
     const context = useContext(CategoryContext);
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
 
     function handleChange(event, newValue) {
-        setValue(newValue);
+        context.handleChangeCategorySelected(newValue)
     }
 
     useEffect(() => {
         context.getCategories().catch(err => error(err.toString()));
     }, []);
 
-    return (
+    return useMemo(() => (
         <div className={classes.root}>
             <AppBar position="static" color="default" className={classes.noShadow}>
                 <Tabs
-                    value={value}
+                    value={context.categorySelected}
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
@@ -58,14 +57,14 @@ export const Posts = withAlert(({error}) => {
                 >
                     <Tab label="All"/>
                     {
-                        context.categories.map((item, key) => <Tab key={key+1} label={item.title}/>)
+                        context.categories.map((item, key) => <Tab key={key+1} value={item._id} label={item.title}/>)
                     }
                 </Tabs>
-                {value === 0 && <TabContainer><PostByCategory category={null}/></TabContainer>}
+                {context.categorySelected === 0 && <TabContainer><PostByCategory category={null}/></TabContainer>}
                 {
-                    context.categories.map((item, key) => { return value === key+1 && <TabContainer key={key+1}><PostByCategory category={item}/></TabContainer>})
+                    context.categories.map((item, key) => { return context.categorySelected === item._id && <TabContainer key={key+1}><PostByCategory category={item}/></TabContainer>})
                 }
             </AppBar>
         </div>
-    )
+    ), [context.categorySelected, context.categories])
 });
