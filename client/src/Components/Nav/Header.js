@@ -270,5 +270,5 @@ export const Header = withUser(({user}) => {
             </div>}
             </Toolbar> </AppBar> {renderMenu}
         </div>
-    ), [context.search]);
+    ), [context.search, user, isMenuOpen, isMobileMenuOpen, state]);
 });
