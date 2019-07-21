@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "72a59ec2-58d4-48ca-8f3f-77255f8d8aaf",
+		"name": "Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Flush",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7eca4ba8-0c77-4c11-b448-ce11d45b6c65",
+						"exec": [
+							"pm.test(\"On a bien tout supprimer\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/flush",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"flush"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5844642c-be63-4c17-be63-cd3854665f00",
+						"exec": [
+							"pm.test(\"Données en Json\", function () {",
+							"  pm.response.to.have.jsonBody();",
+							"});",
+							"",
+							"pm.test(\"Status de réponse création\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"On a bien un ID en base\", function () {",
+							"    pm.expect(typeof pm.response.json()._id).to.eql(\"string\")",
+							"});",
+							"",
+							"pm.test(\"Le pseudo est bon\", function () {",
+							"    pm.expect(pm.response.json().pseudo).to.eql(\"maxime\")",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\" : \"maxime.amore@gmail.com\", \"password\":\"test1234\", \"pseudo\": \"maxime\"}"
+				},
+				"url": {
+					"raw": "localhost:3000/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5844642c-be63-4c17-be63-cd3854665f00",
+						"exec": [
+							"pm.test(\"Données en JSON\", function () {",
+							"  pm.response.to.have.jsonBody();",
+							"});",
+							"",
+							"pm.test(\"Bon status\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"On récupère bien un token, on s'est login\", function () {",
+							"    pm.expect(typeof pm.response.json().token).to.eql(\"string\")",
+							"});",
+							"",
+							"// On set le bearer",
+							"pm.globals.set(\"bearer\", pm.response.json().token);",
+							"",
+							"// ---------- Create Post ------------ //",
+							"",
+							"pm.sendRequest({",
+							"    url: 'localhost:3000/posts/',",
+							"    method: 'POST',",
+							"    header: {",
+							"        \"Authorization\" : \"Bearer \" + pm.globals.get(\"bearer\"),",
+							"        \"Content-Type\" : \"application/json\"",
+							"    },",
+							"    body: JSON.stringify({\"title\":\"JS\", \"description\":\"blabla JS\", \"categories\": {\"_id\": \"5d3384081c4662349d74deeee\",\"title\": \"JS\",\"color\": \"FFFFFF\"}, \"link\": \"https://www.google.fr\", \"upvote\": 24, \"user\" : {\"_id\" : \"345\", \"pseudo\":\"maxime\"} })",
+							"}, function (err, res) {",
+							"    pm.test(\"POST : on récupère bien du json\", function () {",
+							"        pm.response.to.have.jsonBody();",
+							"    });",
+							"",
+							"    pm.test(\"POST : Status HTTP création OK\", function () {",
+							"        pm.response.to.have.status(201);",
+							"    });",
+							"    ",
+							"    pm.test(\"POST : Notre objet a été crée en base\", function () {",
+							"        pm.expect(typeof res.json()._id).to.eql(\"string\")",
+							"    });",
+							"    ",
+							"    pm.test(\"POST : L'article a user qui a un pseudo\", function () {",
+							"        pm.expect(res.json().user.pseudo).to.eql(\"maxime\")",
+							"    });",
+							"    ",
+							"    pm.sendRequest(res.json().link, function (err, response) {",
+							"        pm.test(\"POST : Le lien de l'image est ok\", function () {",
+							"            pm.expect(response.code).to.eql(200)",
+							"        });",
+							"    });",
+							"    ",
+							"    // ---------- Recherche des posts ------------ //",
+							"    ",
+							"    pm.sendRequest(\"localhost:3000/posts\", function (err, response) {",
+							"        pm.test(\"POST : pas authorisé à fetch les posts sans Bearer\", function () {",
+							"            pm.expect(response.json().error).to.eql(\"unauthorized\");",
+							"        });",
+							"    });",
+							"",
+							"    pm.sendRequest({",
+							"        url: 'localhost:3000/posts/',",
+							"        header: {",
+							"            \"Authorization\" : \"Bearer \" + pm.variables.get(\"bearer\"),",
+							"            \"Content-Type\" : \"application/json\"",
+							"        }",
+							"    }, function (err, response) {",
+							"        pm.test(\"POST : bon code de récupération des posts\", function () {",
+							"            pm.expect(response.code).to.eql(200)",
+							"        });",
+							"        ",
+							"        pm.test(\"POST : on a bien trouvé un post\", function () {",
+							"            pm.expect(response.json().length).to.eql(1);",
+							"        });",
+							"    });",
+							"    ",
+							"    // ---------- Recherche avec pseudo du user ------------ //",
+							"    ",
+							"    pm.sendRequest({",
+							"        url: 'localhost:3000/posts?pseudo=maxime',",
+							"        header: {",
+							"            \"Authorization\" : \"Bearer \" + pm.variables.get(\"bearer\"),",
+							"            \"Content-Type\" : \"application/json\"",
+							"        }",
+							"    }, function (err, response) {",
+							"        pm.test(\"POST : bon code de récupération des posts via le pseudo\", function () {",
+							"            pm.expect(response.code).to.eql(200)",
+							"        });",
+							"        ",
+							"        pm.test(\"POST : on a bien trouvé un post avec le pseudo \", function () {",
+							"            pm.expect(response.json().length).to.eql(1);",
+							"        });",
+							"    });",
+							"    ",
+							"     // ---------- Recherche par catégorie ------------ //",
+							"",
+							"    pm.sendRequest({",
+							"        url: 'localhost:3000/posts?category=5d3384081c4662349d74deeee',",
+							"        header: {",
+							"            \"Authorization\" : \"Bearer \" + pm.variables.get(\"bearer\"),",
+							"            \"Content-Type\" : \"application/json\"",
+							"        }",
+							"    }, function (err, response) {",
+							"        pm.test(\"POST : bon code de récupération des posts via la category\", function () {",
+							"            pm.expect(response.code).to.eql(200)",
+							"        });",
+							"        ",
+							"        pm.test(\"POST : on a bien trouvé un post avec la category\", function () {",
+							"            pm.expect(response.json().length).to.eql(1);",
+							"        });",
+							"    });",
+							"    ",
+							"    // ---------- Upvote ------------ //",
+							"",
+							"    pm.sendRequest({",
+							"        url: 'localhost:3000/posts/upvote/' + res.json()._id,",
+							"        method : 'GET',",
+							"        header: {",
+							"            \"Authorization\" : \"Bearer \" + pm.variables.get(\"bearer\"),",
+							"            \"Content-Type\" : \"application/json\"",
+							"        }",
+							"    }, function (err, res) {",
+							"        pm.test(\"POST : bon code erreur pour la route upvote\", function () {",
+							"            pm.expect(res.code).to.eql(200)",
+							"        });",
+							"        ",
+							"        pm.test(\"POST : upvote réussi\", function () {",
+							"            pm.expect(res.json().nModified).to.eql(1)",
+							"        });",
+							"    });",
+							"    ",
+							"    // ---------- Update du post ------------ //",
+							"    ",
+							"    pm.sendRequest({",
+							"        url: 'localhost:3000/posts/' + res.json()._id,",
+							"        method: 'PUT',",
+							"        header: {",
+							"            \"Authorization\" : \"Bearer \" + pm.variables.get(\"bearer\"),",
+							"            \"Content-Type\" : \"application/json\"",
+							"        },",
+							"        body: JSON.stringify({title: 'title modifié'})",
+							"    }, function (err, res) {",
+							"            pm.test(\"POST : Update ok\", function () {",
+							"                pm.expect(res.json().nModified).to.eql(1)",
+							"            });",
+							"            ",
+							"            // ---------- Delete Post ------------ //",
+							"            ",
+							"            pm.sendRequest({",
+							"                url: 'localhost:3000/posts/' + res.json()._id,",
+							"                method: 'DELETE',",
+							"                header: {",
+							"                    \"Authorization\" : \"Bearer \" + pm.variables.get(\"bearer\"),",
+							"                }",
+							"            }, function (err, res) {",
+							"                    pm.test(\"POST : Delete ok\", function () {",
+							"                        pm.expect(res.code).to.eql(500)",
+							"                    });",
+							"            });",
+							"            ",
+							"    });",
+							"",
+							"     ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\" : \"maxime.amore@gmail.com\", \"password\":\"test1234\"}"
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

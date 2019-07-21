@@ -44,7 +44,6 @@ UserSchema.methods.register = function() {
 UserSchema.statics.login = function (email, password) {
     return new Promise((resolve, reject) => {
         this.findOne({email}).then(user => {
-            console.log("user", user)
             if (!user) return reject('User not found');
             bcrypt.compare(password, user.password)
                 .then(res => { res ? resolve(user) : reject("wrong password"); });

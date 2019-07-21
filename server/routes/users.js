@@ -20,7 +20,6 @@ router.get('/:id', (req, res) => {
         .resolve()
         .then(() => User.findById(id))
         .then(user => {
-            console.log(user);
             const {lastname, firstname, pseudo, email} = user;
             return res.status(200).send({
                 lastname,
@@ -55,9 +54,26 @@ router.delete( '/:id', ( req, res, next ) => {
 
     Promise
         .resolve()
-        .then(() => User.remove({ _id: id }).exec())
+        .then(() => User.findById(id))
+        .then((user) => {
+            if(user) return User.remove({ _id: id }).exec()
+            else User.remove({ pseudo: id }).exec()
+        })
         .then(() => res.status(204).send({action : "ok"}))
         .catch(err => res.status(500).send({"error" : err.toString()}));
+});
+
+router.put( '/:id', ( req, res, next ) => {
+    const id = req.params.id
+    const authorizedFields = [
+      'email',
+      'pseudo'
+    ]
+
+    Promise.resolve()
+      .then(() => Post.update({_id : id}, req.body, { authorizedFields }))
+      .then(post => res.status(200).send(post))
+      .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 module.exports = router;

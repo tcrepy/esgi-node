@@ -34,6 +34,20 @@ services:
     ports:
       - 127.0.0.1:3000:3000
 
+  test:
+    image: node:10-alpine
+    volumes:
+      - './server:/home/node/app:rw,consistent'
+    working_dir: '/home/node/app'
+    environment:
+      MONGODB_USER: "root"
+      MONGODB_PASS: "password"
+      MONGODB_DBNAME: "SampleCollections"
+      JWT_SECRET: "MyBestSecret"
+    command: 'npm test'
+    ports:
+      - 127.0.0.1:3002:3000
+
   client:
     build: './client'
     volumes:
