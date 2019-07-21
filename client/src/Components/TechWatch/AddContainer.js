@@ -75,5 +75,5 @@ export const AddContainer = withAlert(({success, error}) => {
     };
 
     return useMemo(() =>
-        <AddForm {...state} handleChange={handleChange} handleSubmit={handleSubmit} submitted={submitted} categories={catContext.categories}/>, [context, catContext, state]);
+        <AddForm {...state} handleChange={handleChange} handleSubmit={handleSubmit} submitted={submitted} categories={catContext.categories}/>, [context, catContext, state, submitted]);
 });
