@@ -41,7 +41,7 @@ test('test sauvegarde utilisateur :: même pseudo', () => {
   .catch(err => expect(JSON.stringify(err).indexOf("E11000 duplicate key error collection")).not.toBe(-1))
 })
 
-test('test sauvegarde utilisateur :: même pseudo', () => {
+test('test sauvegarde utilisateur :: même mail', () => {
   let user3 = new User({
     lastname: 'john',
     firstname: 'smith',

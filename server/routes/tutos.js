@@ -1,12 +1,12 @@
 const express = require('express');
-const Category = require('../Models/CategorySchema');
+const Tuto = require('../Models/TutoSchema');
 const router = express.Router();
 
 router.get('/', (req, res) => {
     Promise
         .resolve()
-        .then(() => Category.find())
-        .then(categories => res.status(200).send(categories))
+        .then(() => Tuto.find())
+        .then(tutos => res.status(200).send(tutos))
         .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
@@ -15,8 +15,8 @@ router.get('/:id', (req, res) => {
 
     Promise
         .resolve()
-        .then(() => Category.findById(id))
-        .then(category => res.status(200).send(category))
+        .then(() => Tuto.findById(id))
+        .then(tuto => res.status(200).send(tuto))
         .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
@@ -26,16 +26,18 @@ router.post('/', (req, res) => {
         .resolve()
         .then(() => {
             if ( !( req.body.title
-                && req.body.description
-                && req.body.color) ) {
+                && req.body.price
+                && req.body.videos
+                && req.body.teacher
+                && req.body.category) ) {
                 throw new Error( 'All fields are required' );
             }
             else {
-                let category = new Category(req.body)
-                return category.save()
+                let tuto = new Tuto(req.body)
+                return tuto.save()
             }
         })
-        .then( category => res.status(201).json( category ) )
+        .then( tuto => res.status(201).json( tuto ) )
         .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
@@ -44,7 +46,7 @@ router.delete( '/:id', ( req, res, next ) => {
 
     Promise
         .resolve()
-        .then(() => Category.remove({ _id: id }).exec())
+        .then(() => Tuto.remove({ _id: id }).exec())
         .then(() => res.status(204).send({action : "ok"}))
         .catch(err => res.status(500).send({"error" : err.toString()}));
 });
@@ -58,8 +60,8 @@ router.put( '/:id', ( req, res, next ) => {
     ]
 
     Promise.resolve()
-      .then(() => Category.updateOne({_id : id}, req.body, { authorizedFields }))
-      .then(category => res.status(200).send(category))
+      .then(() => Tuto.updateOne({_id : id}, req.body, { authorizedFields }))
+      .then(tuto => res.status(200).send(tuto))
       .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 

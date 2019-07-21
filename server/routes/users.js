@@ -60,7 +60,7 @@ router.delete( '/:id', ( req, res, next ) => {
             else User.remove({ pseudo: id }).exec()
         })
         .then(() => res.status(204).send({action : "ok"}))
-        .catch(err => res.status(500).send({"error" : err.toString()}));
+        .catch(err => res.status(204).send({"error" : err.toString()}));
 });
 
 router.put( '/:id', ( req, res, next ) => {
@@ -71,8 +71,8 @@ router.put( '/:id', ( req, res, next ) => {
     ]
 
     Promise.resolve()
-      .then(() => Post.update({_id : id}, req.body, { authorizedFields }))
-      .then(post => res.status(200).send(post))
+      .then(() => User.update({_id : id}, req.body, { authorizedFields }))
+      .then(user => res.status(200).send(user))
       .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
