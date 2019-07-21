@@ -7,7 +7,10 @@ const PostSchema = mongoose.Schema({
     title: String,
     description: String,
     link: String,
-    user: { type: mongoose.Schema.Types.Mixed, default: {} },
+    user: {
+        _id: String,
+        pseudo: String
+     },
     categories: {
         _id: String,
         title: String,
@@ -70,6 +73,12 @@ class Post {
                         break
                     case 'category':
                         search["categories._id"] = value
+                        break
+                    case 'pseudo':
+                        search["user.pseudo"] = value
+                        break
+                    case 'user':
+                        search["user._id"] = value
                         break
                 }
             })
