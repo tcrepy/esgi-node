@@ -11,6 +11,8 @@ services:
     volumes:
       - ./SampleCollections:/usr/local/sampleCollections
     working_dir: /usr/local/sampleCollections
+    networks:
+      - elk
 
   mongo-express:
     image: mongo-express
@@ -19,6 +21,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    networks:
+      - elk
 
   server:
     image: node:10-alpine
@@ -30,7 +34,10 @@ services:
       MONGODB_PASS: "password"
       MONGODB_DBNAME: "SampleCollections"
       JWT_SECRET: "MyBestSecret"
+      ELASTICSEARCH_HOST: elasticsearch:9200
     command: 'npm start'
+    networks:
+      - elk
     ports:
       - 127.0.0.1:3000:3000
 
@@ -42,3 +49,39 @@ services:
     command: 'yarn start'
     ports:
       - 127.0.0.1:3001:3000
+    networks:
+      - elk
+
+  elasticsearch:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+    networks:
+      - elk
+
+  kibana:
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    driver: bridge

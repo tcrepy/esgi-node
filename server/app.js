@@ -5,7 +5,6 @@ const postRouter = require("./routes/posts");
 const tutoRouter = require("./routes/tutos");
 const categoryRouter = require("./routes/categories");
 const indexRouter = require("./routes/index");
-
 const app = express();
 const cors = require('cors');
 
@@ -22,6 +21,7 @@ app.use('/posts', postRouter);
 app.use('/tutos', tutoRouter);
 app.use('/categories', categoryRouter);
 app.use('/users', userRouter);
+
 
 
 app.listen(3000, () => console.log('listening 3000'));
