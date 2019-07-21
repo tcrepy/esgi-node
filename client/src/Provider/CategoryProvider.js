@@ -5,6 +5,7 @@ import {categoryServices} from "../_services/CategoryServices";
 export const CategoryProvider = ({children}) => {
     const [state, setState] = useState({
         categories: [],
+        categorySelected: 0,
         category: {},
         fetched: true,
         getCategories: () => {
@@ -41,6 +42,11 @@ export const CategoryProvider = ({children}) => {
             }, err => {
                 throw new Error(err.toString());
             })
+        },
+        handleChangeCategorySelected: (newValue) => {
+            setState(prevState => {
+                return {...prevState, categorySelected: newValue}
+            });
         }
     });
 

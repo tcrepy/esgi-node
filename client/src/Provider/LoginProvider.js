@@ -54,6 +54,7 @@ export const LoginProvider = ({children}) => {
                     return {...prevState, user: JSON.parse(user)}
                 });
             }).catch(error => {
+                console.log(error);
                 alert.error(error.toString());
                 return history.push(LinkConstants.LOGIN);
             })

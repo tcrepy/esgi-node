@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+  const mongoose = require('mongoose');
 const db = require('../lib/db');
 
 const CategorySchema = mongoose.Schema({

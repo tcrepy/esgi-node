@@ -5,10 +5,20 @@ describe('insert', () => {
   let db;
 
   beforeAll(async () => {
-    connection = await MongoClient.connect("mongodb://localhost:27017/", {
-      useNewUrlParser: true,
+
+    console.log(process.env.MONGODB_USER, process.env.MONGODB_PASS, process.env.MONGODB_DBNAME)
+    connection = await mongoose.connect('mongodb://mongo', {
+      user: process.env.MONGODB_USER,
+      pass: process.env.MONGODB_PASS,
+      dbName: process.env.MONGODB_DBNAME,
+      useNewUrlParser: true
     });
-    db = await connection.db("SampleCollection");
+    db = await connection.db(process.env.MONGODB_DBNAME);
+
+    //connection = await MongoClient.connect("mongodb://localhost:27017/", {
+    //  useNewUrlParser: true,
+    //});
+    //db = await connection.db("SampleCollection");
   });
 
   afterAll(async () => {

@@ -13,7 +13,6 @@ export function handleResponse(response) {
             const error = (data && data.error) || response.statusText;
             return Promise.reject(error);
         }
-console.log(text);
         return data;
     });
 }

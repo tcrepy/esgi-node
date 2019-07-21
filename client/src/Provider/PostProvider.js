@@ -7,9 +7,10 @@ const urlApi = "http://localhost:3000";
 
 export const PostProvider = ({children}) => {
     const [state, setState] = useState({
+        search: "",
         posts: [],
         fetched: false,
-        fetchList: (category_id = null) => {
+        fetchList: (category_id = null, search = "") => {
             setState(prevState => {
                 return {...prevState, fetched: false}
             });
@@ -22,10 +23,15 @@ export const PostProvider = ({children}) => {
                 },
                 mode: 'cors'
             };
-            let url = `${urlApi}/posts`;
+            let url = `${urlApi}/posts?`;
             if (category_id) {
-                url += `?category=${category_id}`;
+                url += `category=${category_id}&`;
             }
+
+            if (search) {
+                url += `title=${search}&description=${search}`;
+            }
+            console.log(url);
             return fetch(`${url}`, requestOptions)
                 .then(response => {
                     if (response.status !== 200) {
@@ -81,9 +87,13 @@ export const PostProvider = ({children}) => {
         },
         NewPost: (title, link, description, categories) => {
             return postServices.save(title, link, description, categories).then()
+        },
+        setSearch: (value) => {
+            setState(prevState => {
+                return {...prevState, search: value}
+            });
         }
     });
-
     return <PostContext.Provider value={state}>
         {children}
     </PostContext.Provider>
