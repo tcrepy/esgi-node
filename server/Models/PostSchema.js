@@ -66,10 +66,19 @@ class Post {
                 if (!value) return
 
                 switch (key) {
-                    case 'description':
-                    case 'title':
-                        let reg = new RegExp(value, 'ig')
-                        search.description = reg
+                    case 'search':
+                        let searchObj = { $or: [
+                          { description: new RegExp(value, 'ig') },
+                          { title: new RegExp(value, 'ig') }
+                        ] }
+                        promises.push(
+                          this.find(searchObj)
+                            .select('_id')
+                            .then(list => {
+                              let ids = list.map(c => c._id)
+                              if (ids.length) search._id = { $in: ids }
+                            })
+                        )
                         break
                     case 'category':
                         search["categories._id"] = value
