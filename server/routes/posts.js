@@ -2,7 +2,7 @@ const express = require('express');
 const Post = require('../Models/PostSchema');
 const router = express.Router();
 const Pagination = require('../lib/Pagination');
-const {Client} = require('@elastic/elasticsearch');
+const elasticsearch = require('@elastic/elasticsearch');
 
 
 router.get('/', (req, res, next) => {
@@ -69,33 +69,39 @@ router.post('/', (req, res) => {
                 throw new Error('All fields are required');
             } else {
                 let post = new Post(req.body);
-                const ELKClient = new Client({
-                    node: {
-                        url: new URL('http://localhost:9200')
-                    },
-                    auth: {
-                        username: 'elastic',
-                        password: 'changeme'
-                    }
-                });
-                try {
-                    ELKClient.index({
-                        index: "posts",
-                        type: '_doc',
-                        body: post
-                    }).then(() => {
-                        return post.save()
-                    })
-                } catch (e) {
-                    console.log(e);
-                    throw new Error(e.toString())
-                }
+                return post.save();
                 //     .catch(err => {
                 //     throw new Error(err.toString())
                 // });
             }
         })
-        .then(post => res.status(201).json(post))
+        .then(post => {
+            const elkPost = {
+                upvote: post.upvote,
+                title: post.title,
+                description: post.description,
+                link: post.link,
+                categories: post.categories,
+                created_at: post.created_at,
+            };
+            const client = new elasticsearch.Client({
+                host: 'http://elasticsearch:9200',
+                log: 'trace',
+                node: 'http://elastic:changeme@elasticsearch:9200'
+            });
+            try {
+                client.index({
+                    index: "posts",
+                    id: post._id,
+                    body: JSON.stringify(elkPost)
+                }).then(() => {
+                    res.status(201).json(post);
+                });
+            } catch (e) {
+                console.log(e);
+                throw new Error(e.toString())
+            }
+        })
         .catch(err => res.status(500).send({error: err.toString()}));
 });
 
