@@ -87,7 +87,6 @@ export const Profil = ({user}) => {
                     >
                         <Tab label="Informations" />
                         <Tab label="User's posts" />
-                        <Tab label="Item Three" />
                     </Tabs>
                     <SwipeableViews
                         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}

@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const Posts = withAlert(({error}) => {
+export const Posts = withAlert(({error, user}) => {
     const context = useContext(CategoryContext);
     const classes = useStyles();
 
@@ -60,11 +60,11 @@ export const Posts = withAlert(({error}) => {
                         context.categories.map((item, key) => <Tab key={key+1} value={item._id} label={item.title}/>)
                     }
                 </Tabs>
-                {context.categorySelected === 0 && <TabContainer><PostByCategory category={null}/></TabContainer>}
+                {context.categorySelected === 0 && <TabContainer><PostByCategory user={user} category={null}/></TabContainer>}
                 {
-                    context.categories.map((item, key) => { return context.categorySelected === item._id && <TabContainer key={key+1}><PostByCategory category={item}/></TabContainer>})
+                    context.categories.map((item, key) => { return context.categorySelected === item._id && <TabContainer key={key+1}><PostByCategory user={user} category={item}/></TabContainer>})
                 }
             </AppBar>
         </div>
-    ), [context.categorySelected, context.categories])
+    ), [context.categorySelected, context.categories, user])
 });

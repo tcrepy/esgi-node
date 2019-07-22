@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const PostsList = withAlert((props) => {
-    const userContext = useContext(UserContext);
     const context = useContext(PostContext);
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -34,11 +33,11 @@ export const PostsList = withAlert((props) => {
         }
     });
     useEffect(() => {
-        context.fetchList(props.category ? props.category._id : null, context.search, userContext.user).catch(err => {
+        context.fetchList(props.category ? props.category._id : null, context.search, props.user ? props.user : null).catch(err => {
             props.error(err.toString());
             history.push(LinkConstants.LOGIN);
         });
-    }, [props.category, userContext.user]);
+    }, [props.category, props.user]);
 
     const classes = useStyles();
 
@@ -58,7 +57,7 @@ export const PostsList = withAlert((props) => {
             }
         </ul>
         }{context.fetched && context.posts.length === 0 && <div>No Records</div>}
-        <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>
-        </List></Container>, [context, userContext]
+            {!props.user && <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>}
+        </List></Container>, [context, props.user]
     )
 });
