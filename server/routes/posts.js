@@ -14,21 +14,40 @@ router.get('/', (req, res, next) => {
     Promise.resolve()
     // On construit l'objet de recherche
         .then(() => Post.paramize(searchQuery || {}))
-        .then(search =>
-            Promise.all([
-                // On compte le nombre d'annonces
-                // correspondant à la recherche
-                Post.countDocuments(search),
-                // On recherche les annonces
-                // correspondant à la recherche
-                Post.find(search)
-                    .limit(Number(limit))
-                    .skip(page * Number(limit))
-                    .sort(order),
-            ])
+        .then(search => {
+                console.log(JSON.stringify(search));
+
+                // return Promise.all([
+                //     // On compte le nombre d'annonces
+                //     // correspondant à la recherche
+                //     Post.countDocuments(search),
+                //     // On recherche les annonces
+                //     // correspondant à la recherche
+                //     Post.find(search)
+                //         .limit(Number(limit))
+                //         .skip(page * Number(limit))
+                //         .sort(order),
+                // ])
+                const client = new elasticsearch.Client({
+                    host: 'http://elasticsearch:9200',
+                    log: 'trace',
+                    node: 'http://elastic:changeme@elasticsearch:9200'
+                });
+                client.search({
+                    index: "posts",
+                    body: JSON.stringify({
+                        query: search
+                    })
+                }).then(resp => {
+                    res.status(200).send(resp.body.hits.hits);
+                    // return resp.body.hits.hits;
+                }).catch(err => {
+                    console.log("err: ", err);
+                })
+            }
         )
-        .then(([count, list]) => {
-            res.status(200).send(list)
+        .then((list) => {
+            // res.status(200).send(list)
         })
         .catch(err => res.status(500).send({"error": err.toString()}));
 })

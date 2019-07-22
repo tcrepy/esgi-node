@@ -29,9 +29,8 @@ export const PostProvider = ({children}) => {
             }
 
             if (search) {
-                url += `title=${search}&description=${search}`;
+                url += `search=${search}`;
             }
-            console.log(url);
             return fetch(`${url}`, requestOptions)
                 .then(response => {
                     if (response.status !== 200) {
@@ -42,6 +41,7 @@ export const PostProvider = ({children}) => {
                 })
                 .then(data => {
                     return new Promise((resolve) => {
+                        data = data.map(item => item._source);
                         setState(prevState => {
                             return {
                                 ...prevState,
