@@ -1,5 +1,6 @@
 import config from "../config";
 import {fetchHeaders, handleResponse} from "./Utils";
+import {userService} from "./UserServices";
 
 const route = `${config.apiUrl}/posts`;
 
@@ -13,6 +14,8 @@ const getAll = () => {
 };
 
 const save = (title, link, description, categories) => {
+    const user = userService.getCurrentUser();
+    console.log(user);
     const requestOptions = {
         method: "POST",
         headers: fetchHeaders(),
@@ -21,7 +24,11 @@ const save = (title, link, description, categories) => {
             "title": title,
             "description": description,
             "link": link,
-            "categories": categories
+            "categories": categories,
+            "user": {
+                "_id": user.id,
+                "pseudo": user.pseudo
+            }
         })
     };
     return fetch(`${route}/`, requestOptions).then(handleResponse);

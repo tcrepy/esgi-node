@@ -27,8 +27,7 @@ export const PostItem = ({item, handleDelete}) => {
     return <ListItem alignItems="center">
         <ListItemAvatar>
             <Avatar aria-label="Recipe" className={classes.avatar}>
-                PS
-                {/*{user.pseudo.toUpperCase().substr(0,1)}*/}
+                {item.user ? item.user.pseudo.toUpperCase().substr(0,1) : "TW"}
             </Avatar>
             {/*<Avatar alt="Remy Sharp" src={item.user.image} />*/}
             {/*<ListItemText*/}
