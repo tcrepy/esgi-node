@@ -6,7 +6,7 @@ const route = `${config.apiUrl}/posts`;
 const getAll = () => {
     const requestOptions = {
         method: 'GET',
-        headers: fetchHeaders,
+        headers: fetchHeaders(),
         mode: "cors"
     };
     return fetch(`${route}/`, requestOptions).then(handleResponse);
@@ -15,7 +15,7 @@ const getAll = () => {
 const save = (title, link, description, categories) => {
     const requestOptions = {
         method: "POST",
-        headers: fetchHeaders,
+        headers: fetchHeaders(),
         mode: 'cors',
         body: JSON.stringify({
             "title": title,

@@ -17,4 +17,10 @@ export function handleResponse(response) {
     });
 }
 
-export const fetchHeaders = {...authHeader(), 'Content-Type': 'application/json'};
+export const fetchHeaders = () => {
+    return {
+        ...authHeader(),
+        "Accept": "application/json",
+        'Content-Type': 'application/json'
+    }
+};

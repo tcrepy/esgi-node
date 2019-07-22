@@ -31,7 +31,6 @@ export const PostProvider = ({children}) => {
             if (search) {
                 url += `title=${search}&description=${search}`;
             }
-            console.log(url);
             return fetch(`${url}`, requestOptions)
                 .then(response => {
                     if (response.status !== 200) {

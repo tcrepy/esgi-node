@@ -14,10 +14,11 @@ const login = (username, password) => {
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-            console.log(getCurrentUser());
-            return user;
-        });
+            return new Promise(resolve => {
+                localStorage.setItem('user', JSON.stringify(user));
+                resolve(user);
+            });
+        }).then(user => user);
 };
 
 const getCurrentUser = () => {
