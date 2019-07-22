@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import {List as ListIcon} from "@material-ui/icons";
 import {Container} from "@material-ui/core";
 import CardHeader from "@material-ui/core/CardHeader";
+import {UserContext} from "../../Context/UserContext";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const PostsList = withAlert((props) => {
+    const userContext = useContext(UserContext);
     const context = useContext(PostContext);
     useEffect(() => {
         if (!localStorage.getItem('user')) {
@@ -32,11 +34,11 @@ export const PostsList = withAlert((props) => {
         }
     });
     useEffect(() => {
-        context.fetchList(props.category ? props.category._id : null).catch(err => {
+        context.fetchList(props.category ? props.category._id : null, context.search, userContext.user).catch(err => {
             props.error(err.toString());
             history.push(LinkConstants.LOGIN);
         });
-    }, [props.category]);
+    }, [props.category, userContext.user]);
 
     const classes = useStyles();
 
@@ -57,6 +59,6 @@ export const PostsList = withAlert((props) => {
         </ul>
         }{context.fetched && context.posts.length === 0 && <div>No Records</div>}
         <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>
-        </List></Container>, [context]
+        </List></Container>, [context, userContext]
     )
 });

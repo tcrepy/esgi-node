@@ -10,7 +10,7 @@ export const PostProvider = ({children}) => {
         search: "",
         posts: [],
         fetched: false,
-        fetchList: (category_id = null, search = "") => {
+        fetchList: (category_id = null, search = "", user = null) => {
             setState(prevState => {
                 return {...prevState, fetched: false}
             });
@@ -26,6 +26,10 @@ export const PostProvider = ({children}) => {
             let url = `${urlApi}/posts?`;
             if (category_id) {
                 url += `category=${category_id}&`;
+            }
+
+            if (user) {
+                url += `user=${user.id}&`
             }
 
             if (search) {

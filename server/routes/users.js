@@ -20,8 +20,9 @@ router.get('/:id', (req, res) => {
         .resolve()
         .then(() => User.findById(id))
         .then(user => {
-            const {lastname, firstname, pseudo, email} = user;
+            const {id, lastname, firstname, pseudo, email} = user;
             return res.status(200).send({
+                id,
                 lastname,
                 firstname,
                 pseudo,

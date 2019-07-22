@@ -12,6 +12,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import SwipeableViews from 'react-swipeable-views';
 import * as PropTypes from "prop-types";
+import {Posts} from "../../TechWatch/Posts";
 
 function TabContainer({ children, dir }) {
     return (
@@ -84,8 +85,8 @@ export const Profil = ({user}) => {
                         textColor="primary"
                         centered
                     >
-                        <Tab label="Item One" />
-                        <Tab label="Item Two" />
+                        <Tab label="Informations" />
+                        <Tab label="User's posts" />
                         <Tab label="Item Three" />
                     </Tabs>
                     <SwipeableViews
@@ -93,9 +94,8 @@ export const Profil = ({user}) => {
                         index={value}
                         onChangeIndex={handleChangeIndex}
                     >
-                        <TabContainer dir={theme.direction}>Item One</TabContainer>
-                        <TabContainer dir={theme.direction}>Item Two</TabContainer>
-                        <TabContainer dir={theme.direction}>Item Three</TabContainer>
+                        <TabContainer dir={theme.direction}>Information</TabContainer>
+                        <TabContainer dir={theme.direction}><Posts user={user}/></TabContainer>
                     </SwipeableViews>
                 </Paper>
             </CardContent>
