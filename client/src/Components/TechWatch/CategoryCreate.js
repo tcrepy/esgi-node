@@ -32,13 +32,14 @@ export const CategoryCreate = withAlert(({success, error}) => {
         setSubmitted(true);
         context.newCategory(state)
             .then(() => {
+                setSubmitted(false);
                 success('Category has been added');
                 history.push(LinkConstants.CATEGORY_LIST);
             })
             .catch(err => {
+                setSubmitted(false);
                 error(err.toString());
             })
-            .finally(() => setSubmitted(false))
     };
 
     const {title, description, color} = state;
