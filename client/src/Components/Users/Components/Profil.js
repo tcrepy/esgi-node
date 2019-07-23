@@ -66,38 +66,37 @@ export const Profil = ({user}) => {
         setValue(index);
     }
     return <Container maxWidth="md">
-        <Card>
-            <CardHeader
-                avatar={
-                    <Avatar aria-label="Recipe" className={classes.avatar}>
-                        {user.pseudo.toUpperCase().substr(0,1)}
-                    </Avatar>
-                }
-                title={user.email}
-                subheader={user.pseudo}
-            />
-            <CardContent>
-                <Paper className={classes.root}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        centered
-                    >
-                        <Tab label="Informations" />
-                        <Tab label="User's posts" />
-                    </Tabs>
-                    <SwipeableViews
-                        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                        index={value}
-                        onChangeIndex={handleChangeIndex}
-                    >
-                        <TabContainer dir={theme.direction}>Information</TabContainer>
-                        <TabContainer dir={theme.direction}><Posts user={user}/></TabContainer>
-                    </SwipeableViews>
-                </Paper>
-            </CardContent>
-        </Card>
+        <CardContent>
+            <Paper className={classes.root}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    centered
+                >
+                    <Tab label="Informations" />
+                    <Tab label="User's posts" />
+                </Tabs>
+                <SwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={value}
+                    onChangeIndex={handleChangeIndex}
+                >
+                    <TabContainer dir={theme.direction}>
+                      <CardHeader
+                          avatar={
+                            <Avatar aria-label="Recipe" className={classes.avatar}>
+                              {user.pseudo.toUpperCase().substr(0,1)}
+                            </Avatar>
+                          }
+                          title={user.email}
+                          subheader={user.pseudo}
+                      />
+                    </TabContainer>
+                    <TabContainer dir={theme.direction}><Posts user={user}/></TabContainer>
+                </SwipeableViews>
+            </Paper>
+        </CardContent>
     </Container>
 }
