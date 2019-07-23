@@ -1,4 +1,5 @@
 export const LinkConstants = {
+    HOME: "/",
     POST_LIST: "/list",
     POST_LIST_CATEGORY: "/list/category",
     POST_CREATE: "/posts/new",
