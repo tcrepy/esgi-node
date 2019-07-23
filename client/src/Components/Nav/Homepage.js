@@ -120,14 +120,11 @@ export default function Homepage() {
           <Typography variant="h6" align="center" gutterBottom>
             Follow us
           </Typography>
-          {/*<Typography variant="subtitle1" align="center" color="textSecondary" component="p">*/}
             <CardMedia>
               <img src={recipe.facebook} alt="Facebook logo" className={classes.media}/>
               <img src={recipe.twitter} alt="Twitter logo" className={classes.media}/>
               <img src={recipe.instagram} alt="Instagram logo" className={classes.media}/>
             </CardMedia>
-            {/*<img src={this.props.recipe.thumbnail} alt="recipe thumbnail"/>*/}
-          {/*</Typography>*/}
           <CopyrightText/>
         </footer>
       </React.Fragment>
