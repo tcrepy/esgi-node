@@ -40,13 +40,13 @@ export const AddContainer = withAlert(({success, error}) => {
         const {title, link, description, category} = state;
         if (check()) {
             context.NewPost(title, link, description, category).then(() => {
+                setSubmitted(false);
                 success('A new post has been added');
                 history.push(LinkConstants.POST_LIST);
             }).catch(err => {
-                error(err);
-            }).finally(() => {
                 setSubmitted(false);
-            });
+                error(err);
+            })
         } else {
             setSubmitted(false);
         }
