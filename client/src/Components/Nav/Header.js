@@ -29,6 +29,8 @@ import {userService} from "../../_services/UserServices";
 import Drawer from '@material-ui/core/Drawer';
 import {PostContext} from "../../Context/PostContext";
 import {CategoryContext} from "../../Context/CategoryContext";
+import {withRouter} from 'react-router-dom';
+import {LoginContext} from "../../Context/LoginContext";
 
 
 const useStyles = makeStyles(theme => ({
@@ -108,7 +110,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const Header = withUser(({user}) => {
+export const Header = withRouter(({...props}) => {
+    const userContext = useContext(LoginContext);
     const context = useContext(PostContext);
     const catContext = useContext(CategoryContext);
     const classes = useStyles();
@@ -118,6 +121,7 @@ export const Header = withUser(({user}) => {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+    const {pathname} = props.location;
     const [state, setState] = React.useState({
         left: false,
     });
@@ -238,7 +242,7 @@ export const Header = withUser(({user}) => {
                 {/*TODO::include sidebar with Drawer component*/}
                 <Typography className={classes.title} variant="h6" noWrap>
                     <NavLink className={classes.link} to={LinkConstants.HOME}>TechWatch</NavLink> </Typography>
-                <form onSubmit={handleSubmitSearch}>
+              {pathname === LinkConstants.POST_LIST && <form onSubmit={handleSubmitSearch}>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <Search/>
@@ -248,9 +252,9 @@ export const Header = withUser(({user}) => {
                             input: classes.inputInput,
                         }} inputProps={{'aria-label': 'Search'}} value={context.search} onChange={handleChangeSearch}/>
                     </div>
-                </form>
+                </form>}
                 <div className={classes.grow}/>
-                {user.token && <div className={classes.sectionDesktop}>
+                {userContext.user.token && <div className={classes.sectionDesktop}>
                     <Tooltip title="List posts">
 
                         <IconButton aria-label="List posts" color="inherit">
@@ -264,11 +268,11 @@ export const Header = withUser(({user}) => {
                     </Tooltip>
                     <IconButton edge="end" aria-label="Account of current user" aria-controls={menuId} aria-haspopup="true" onClick={handleProfileMenuOpen} color="inherit">
                         <AccountCircle/> </IconButton>
-                </div>} {!user.token && <div className={classes.sectionDesktop}>
+                </div>} {!userContext.user.token && <div className={classes.sectionDesktop}>
                 <NavLink className={classes.link} to={LinkConstants.LOGIN}><Button color="inherit">Login</Button></NavLink>
                 <NavLink className={classes.link} to={LinkConstants.REGISTER}><Button color="inherit">Register</Button></NavLink>
             </div>}
             </Toolbar> </AppBar> {renderMenu}
         </div>
-    ), [context.search, user, isMenuOpen, isMobileMenuOpen, state]);
+    ), [context.search, userContext, isMenuOpen, isMobileMenuOpen, state]);
 });
