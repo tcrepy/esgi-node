@@ -71,6 +71,9 @@ const useStyles = makeStyles(theme => ({
   media: {
     width: "20px",
     margin: "5px"
+  },
+  gallery: {
+    maxWidth: "100%"
   }
 }));
 
@@ -111,7 +114,7 @@ export default function Homepage() {
             </Container>
           </div>
           <Container className={classes.cardGrid} align="center">
-              <img src={recipe.gallery} alt="Gallery image"/>
+              <img src={recipe.gallery} alt="Gallery image" className={classes.gallery}/>
           </Container>
         </main>
         <footer className={classes.footer}>
