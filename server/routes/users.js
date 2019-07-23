@@ -60,8 +60,8 @@ router.delete( '/:id', ( req, res, next ) => {
             if(user) return User.remove({ _id: id }).exec()
             else User.remove({ pseudo: id }).exec()
         })
-        .then(() => res.status(204).send({action : "ok"}))
-        .catch(err => res.status(204).send({"error" : err.toString()}));
+        .then(() => res.status(204))
+        .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
 router.put( '/:id', ( req, res, next ) => {

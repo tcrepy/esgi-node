@@ -2,6 +2,9 @@ import {userService} from "./UserServices";
 import {authHeader} from "../_helper/auth-header";
 
 export function handleResponse(response) {
+    if (response.status === 204) {
+        return true;
+    }
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {

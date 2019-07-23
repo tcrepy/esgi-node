@@ -8,12 +8,9 @@ import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import {NavLink} from "react-router-dom";
 import {LinkConstants} from "../../_constants/link.constants";
-import {Bookmark, Search, List as ListIcon} from "@material-ui/icons";
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import {Bookmark, Search, List as ListIcon, OpenInNew} from "@material-ui/icons";
 import HomeIcon from '@material-ui/icons/Home';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -142,13 +139,13 @@ export const Header = withRouter(({...props}) => {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-
                 <NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>
                     <ListItem button key='Home'>
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                         <ListItemText primary='Home' />
                     </ListItem>
                 </NavLink>
+                {user.token && <>
                 <NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>
                     <ListItem button key='Posts'>
                         <ListItemIcon><CommentIcon /></ListItemIcon>
@@ -161,27 +158,28 @@ export const Header = withRouter(({...props}) => {
                         <ListItemText primary='Categories' />
                     </ListItem>
                 </NavLink>
-                <Divider/>
-                <NavLink className={classes.linkWhite} to={LinkConstants.LOGIN}>
-                    <ListItem button key='Login'>
-                        <ListItemIcon><PersonIcon /></ListItemIcon>
-                        <ListItemText primary='Login' />
+                    <Divider/>
+                <NavLink className={classes.linkWhite} to={LinkConstants.LOGOUT}>
+                    <ListItem button key='Logout'>
+                        <ListItemIcon><OpenInNew /></ListItemIcon>
+                        <ListItemText primary='Logout' />
                     </ListItem>
-                </NavLink>
-                <NavLink className={classes.linkWhite} to={LinkConstants.REGISTER}>
-                    <ListItem button key='Register'>
-                        <ListItemIcon><PersonAddIcon /></ListItemIcon>
-                        <ListItemText primary='Register' />
-                    </ListItem>
-                </NavLink>
+                </NavLink></>}
+                {!user.token &&
+                    <><NavLink className={classes.linkWhite} to={LinkConstants.LOGIN}>
+                        <ListItem button key='Login'>
+                            <ListItemIcon><PersonIcon /></ListItemIcon>
+                            <ListItemText primary='Login' />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink className={classes.linkWhite} to={LinkConstants.REGISTER}>
+                        <ListItem button key='Register'>
+                            <ListItemIcon><PersonAddIcon /></ListItemIcon>
+                            <ListItemText primary='Register' />
+                        </ListItem>
+                    </NavLink>
+                </>}
             </List>
-
-
-            <NavLink className={classes.link} to={LinkConstants.LOGIN}><Button color="inherit">Login</Button></NavLink>
-            <NavLink className={classes.link} to={LinkConstants.REGISTER}><Button color="inherit">Register</Button></NavLink>
-            <NavLink className={classes.link} to={LinkConstants.POST_LIST}><ListIcon/></NavLink>
-            <NavLink className={classes.link} to={LinkConstants.CATEGORY_LIST}><Bookmark/></NavLink>
-            <NavLink className={classes.link} to={LinkConstants.HOME}>TechWatch</NavLink>
         </div>
     );
 

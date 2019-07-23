@@ -17,7 +17,7 @@ const PostSchema = mongoose.Schema({
         color: String
     },
     created_at: {type: Date, default: Date.now},
-    upvote: {type: Number, default: 0}
+    upvote: {type: [String], default: []},
 });
 
 class Post {

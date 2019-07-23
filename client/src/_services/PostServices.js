@@ -15,7 +15,6 @@ const getAll = () => {
 
 const save = (title, link, description, categories) => {
     const user = userService.getCurrentUser();
-    console.log(user);
     const requestOptions = {
         method: "POST",
         headers: fetchHeaders(),
@@ -32,9 +31,25 @@ const save = (title, link, description, categories) => {
         })
     };
     return fetch(`${route}/`, requestOptions).then(handleResponse);
+};
+
+const like = (post) => {
+    const user = userService.getCurrentUser();
+    const requestOpt = {
+        method: "PUT",
+        headers: fetchHeaders(),
+        mode: "cors",
+        body: JSON.stringify({
+            "post": post,
+            "user": user
+        })
+    };
+
+    return fetch(`${route}/upvote/${post._id}`, requestOpt).then(handleResponse);
 }
 
 export const postServices = {
     getAll,
-    save
+    save,
+    like
 };

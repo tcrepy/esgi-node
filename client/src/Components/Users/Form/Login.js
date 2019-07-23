@@ -61,7 +61,7 @@ export const SignIn = ({email, password, handleChange, handleSubmit, loggingIn})
                 <Avatar className={classes.avatar}> <Lock/> </Avatar>
                 <Typography component="h1" variant="h5"> Sign in </Typography>
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                    <TextField variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus value={email} onChange={handleChange}/>
+                    <TextField type="email" variant="outlined" margin="normal" required fullWidth id="email" label="Email Address" name="email" autoComplete="email" autoFocus value={email} onChange={handleChange}/>
                     <TextField variant="outlined" margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" value={password} onChange={handleChange}/>
                     <div className={classes.wrapper}>
                         <Button disabled={loggingIn} type="submit" fullWidth variant="contained" color="primary" className={classes.submit}> Sign In </Button> {loggingIn &&

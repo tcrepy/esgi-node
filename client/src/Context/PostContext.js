@@ -8,5 +8,6 @@ export const PostContext = createContext({
     NewPost: () => {},
     DeletePost: () => {},
     setSearch: () => {},
-    handleSubmitSearch: () => {}
+    handleSubmitSearch: () => {},
+    like: () => {}
 });
