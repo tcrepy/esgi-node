@@ -122,7 +122,7 @@ router.get('/flush', (req, res) => {
         Category.remove( { } ).exec(),
         User.remove( { } ).exec()
     ])
-    .then(() => res.status(204).send({action : "ok"}))
+    .then(() => res.status(204))
     .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 

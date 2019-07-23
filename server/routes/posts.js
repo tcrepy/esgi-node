@@ -32,15 +32,29 @@ router.get( '/', ( req, res, next ) => {
       } )
 
 
-router.get('/upvote/:id', (req, res) => {
-  const id = req.params.id
-
+router.put('/upvote/:id', (req, res) => {
+  const data = req.body
   Promise
       .resolve()
-      .then(() => Post.updateOne(
-        {"_id" : id },
-        { $inc: { "upvote": 1 } }
-      ))
+      .then(() => Post.findById(data.post.id))
+      .then((post) => {
+        // upvote : on rajoute l'id du user dans le tableau
+        if(!post.upvote.includes(data.user.id))
+          return Promise.all([Post.updateOne(
+            {"_id" : data.post.id },
+            { upvote : [...post.upvote, data.user.id] }
+          ), post])
+        // unvote : on enlève l'id du user du tableau
+        else {
+          let upvote = []
+          post.upvote.forEach(id => { if(id != data.user.id) upvote.push(id) })
+          return Promise.all([Post.updateOne(
+            {"_id" : data.post.id },
+            { upvote }
+          ), post])
+        }
+      })
+      .then(([update, post]) => Post.findById(data.post.id))
       .then(post => res.status(200).send(post))
       .catch(err => res.status(500).send({"error" : err.toString()}));
 });
@@ -81,7 +95,7 @@ router.delete( '/:id', ( req, res, next ) => {
   Promise
       .resolve()
       .then(() => Post.remove({ _id: id }).exec())
-      .then(() => res.status(204).send({action : "ok"}))
+      .then(() => res.status(204))
       .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 

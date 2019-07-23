@@ -47,7 +47,7 @@ router.delete( '/:id', ( req, res, next ) => {
     Promise
         .resolve()
         .then(() => Tuto.remove({ _id: id }).exec())
-        .then(() => res.status(204).send({action : "ok"}))
+        .then(() => res.status(204))
         .catch(err => res.status(500).send({"error" : err.toString()}));
 });
 
