@@ -139,13 +139,13 @@ export const Header = withRouter(({...props}) => {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-                <NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>
+                <NavLink className={classes.linkWhite} to={LinkConstants.HOME}>
                     <ListItem button key='Home'>
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                         <ListItemText primary='Home' />
                     </ListItem>
                 </NavLink>
-                {user.token && <>
+                {userContext.user.token && <>
                 <NavLink className={classes.linkWhite} to={LinkConstants.POST_LIST}>
                     <ListItem button key='Posts'>
                         <ListItemIcon><CommentIcon /></ListItemIcon>
@@ -165,7 +165,7 @@ export const Header = withRouter(({...props}) => {
                         <ListItemText primary='Logout' />
                     </ListItem>
                 </NavLink></>}
-                {!user.token &&
+                {!userContext.user.token &&
                     <><NavLink className={classes.linkWhite} to={LinkConstants.LOGIN}>
                         <ListItem button key='Login'>
                             <ListItemIcon><PersonIcon /></ListItemIcon>

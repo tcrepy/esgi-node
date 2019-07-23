@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import {LinkConstants} from '../../_constants/link.constants';
 import {history} from "../../_helper/history";
+import {NavLink} from "react-router-dom";
 
 function CopyrightText() {
   return (
@@ -76,11 +77,7 @@ export default function Homepage() {
               <div className={classes.heroButtons}>
                 <Grid container justify="center">
                   <Grid item>
-                    <Link component="button" onClick={() => {history.push(LinkConstants.POST_LIST);}}>
-                      <Button variant="contained" color="primary" to={LinkConstants.POST_CREATE}>
-                        "Tech Watching" now!
-                      </Button>
-                    </Link>
+                    <NavLink to={LinkConstants.POST_LIST}> <Button variant="contained" color="primary"> "Tech Watching" now! </Button></NavLink>
                   </Grid>
                 </Grid>
               </div>
