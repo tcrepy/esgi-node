@@ -97,7 +97,18 @@ export const PostProvider = ({children}) => {
             });
         },
         like: (post) => {
-            return postServices.like(post).then(upvote => upvote);
+            return postServices.like(post).then(newPost => {
+                setState(prevState => {
+                    return {
+                        ...prevState, posts: prevState.posts.map(item => {
+                            if (item._id === post._id) {
+                                item = newPost;
+                            }
+                            return item;
+                        })
+                    }
+                })
+            });
         }
     });
     return <PostContext.Provider value={state}>

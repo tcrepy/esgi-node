@@ -56,34 +56,25 @@ export const PostsList = withAlert((props) => {
         console.log(context);
         e.preventDefault();
         context.like(post)
-            .then(upvote => {
-                context.posts = context.posts.map(item => {
-                    if (item._id === post._id) {
-                      post.upvote = upvote;
-                    }
-                })
-            })
             .catch(err => {
                 props.error(err.toString())
             });
     };
 
-    return useMemo(() => <Container maxWidth="md">
-        <List className={classes.root}>
+    return useMemo(() => <Container maxWidth="md"> <List className={classes.root}>
             {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
         <ul>
             {
-                context.posts.map((item, key) => <PostItem key={key} item={item} handleDelete={handleDelete} handleLike={handleLike}/>)
+                context.posts.map((item, key) =>
+                    <PostItem key={key} item={item} handleDelete={handleDelete} handleLike={handleLike}/>)
             }
         </ul>
-        }
-        {context.fetched && context.posts.length === 0 &&
+        } {context.fetched && context.posts.length === 0 &&
         <div className={classes.noRecord}>
             <img src={noRecordImg} alt="no records" width={150} height={150}/>
             <div className={classes.noRecordContent}>No Records</div>
         </div>
-        }
-            {!props.user && <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>}
+        } {!props.user && <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>}
         </List></Container>, [context, props.user]
     )
 });

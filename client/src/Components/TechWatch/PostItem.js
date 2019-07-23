@@ -51,7 +51,7 @@ export const PostItem = ({item, handleDelete, handleLike}) => {
 
 
         <ListItemText className={classes.listItemContainer}
-                      primary={<><a className={classes.link} href={item.link} target="_blank">{item.title}</a> - <a onClick={e => handleLike(e, item)} className={`${classes.like} ${classes.link}`}>Like ({item.upvote})</a></>}
+                      primary={<><a className={classes.link} href={item.link} target="_blank">{item.title}</a> - <a onClick={e => handleLike(e, item)} className={`${classes.like} ${classes.link}`}>Like ({item.upvote.length})</a></>}
             secondary={
                 <React.Fragment>
                     <Typography
