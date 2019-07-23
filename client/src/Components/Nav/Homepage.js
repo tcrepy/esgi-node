@@ -111,20 +111,16 @@ export default function Homepage() {
             </Container>
           </div>
           <Container className={classes.cardGrid} align="center">
-            <CardMedia>
               <img src={recipe.gallery} alt="Gallery image"/>
-            </CardMedia>
           </Container>
         </main>
         <footer className={classes.footer}>
           <Typography variant="h6" align="center" gutterBottom>
             Follow us
           </Typography>
-            <CardMedia>
               <img src={recipe.facebook} alt="Facebook logo" className={classes.media}/>
               <img src={recipe.twitter} alt="Twitter logo" className={classes.media}/>
               <img src={recipe.instagram} alt="Instagram logo" className={classes.media}/>
-            </CardMedia>
           <CopyrightText/>
         </footer>
       </React.Fragment>
