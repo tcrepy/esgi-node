@@ -4,8 +4,10 @@ import {LoginContext} from "../Context/LoginContext";
 import {AlertContext} from "../Context/AlertContext";
 import {LinkConstants} from "../_constants/link.constants";
 import {history} from "../_helper/history";
+import {withRouter} from 'react-router-dom';
 
-export const LoginProvider = ({children}) => {
+export const LoginProvider = withRouter(({children, ...props}) => {
+    const {pathname} = props.location;
     const alert = useContext(AlertContext);
     const [state, setState] = useState({
         user: {},
@@ -56,17 +58,21 @@ export const LoginProvider = ({children}) => {
             }).catch(error => {
                 console.log(error);
                 alert.error(error.toString());
+                if (pathname === LinkConstants.HOME) {
+                    return;
+                }
+
                 return history.push(LinkConstants.LOGIN);
             })
         } else {
-            return history.push(LinkConstants.LOGIN);
+            return history.push(LinkConstants.HOME);
         }
     }, []);
 
     return <LoginContext.Provider value={state}>
         {children}
     </LoginContext.Provider>
-};
+});
 
 export const withUser = Component => props => {
     return <LoginContext.Consumer>

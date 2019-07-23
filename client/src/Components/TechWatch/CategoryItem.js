@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Bookmark} from "@material-ui/icons";
 import Avatar from "@material-ui/core/Avatar";
+import {CategoryPanel} from "./Components/CategoryPanel";
 
 const useStyles = makeStyles(theme => ({
     inline: {
@@ -17,6 +18,12 @@ const useStyles = makeStyles(theme => ({
     },
     customColor: {
         backgroundColor: props => props.color
+    },
+    border: {
+        borderColor: props => props.color,
+        border: "solid 1px",
+        borderRadius: "10px",
+        marginTop: "20px"
     }
 }));
 
@@ -24,10 +31,12 @@ const useStyles = makeStyles(theme => ({
 
 export const CategoryItem = ({item}) => {
     const classes = useStyles(item);
-    return <ListItem alignItems="center" className={classes.customColor}>
+    return <ListItem alignItems="center" className={classes.border}>
         <ListItemText primary={<a href={item.link}>{item.title}</a>} secondary={
             <React.Fragment>
                 {item.description}
             </React.Fragment>
-        }/> <Actions item={item}/> </ListItem>
+        }/>
+      <CategoryPanel category={item}/>
+      <Actions item={item}/> </ListItem>
 };

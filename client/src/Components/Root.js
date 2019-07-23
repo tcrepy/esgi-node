@@ -16,32 +16,34 @@ import {CategoryCreate} from "./TechWatch/CategoryCreate";
 import {ProfilContainer} from "./Users/ProfilContainer";
 import {UserProvider} from "../Provider/UserProvider";
 import {Posts} from "./TechWatch/Posts";
+import Homepage from './Nav/Homepage';
 
 
 const Root = () => (
     <div className="App">
         <AlertProvider>
-            <LoginProvider>
-                <Router history={history}>
-                    <main>
-                        <PostProvider>
-                            <CategoryProvider>
-                                <Route path="/" component={App}/>
-                                <Route exact path={LinkConstants.POST_LIST} component={Posts}/>
-                                <Route exact path={LinkConstants.POST_CREATE} component={AddContainer}/>
-                                <UserProvider><Route exact path={`${LinkConstants.USER_PROFIL}/:id`} component={ProfilContainer}/></UserProvider>
-                            </CategoryProvider>
-                        </PostProvider>
-                        <Route exact path={LinkConstants.LOGIN} component={LoginContainer}/>
-                        <Route exact path={LinkConstants.LOGOUT} component={LogoutContainer}/>
-                        <Route exact path={LinkConstants.REGISTER} component={RegisterContainer}/>
+            <Router history={history}>
+              <LoginProvider>
+                <main>
+                    <PostProvider>
                         <CategoryProvider>
-                            <Route exact path={LinkConstants.CATEGORY_LIST} component={CategoriesList}/>
-                            <Route exact path={LinkConstants.CATEGORY_CREATE} component={CategoryCreate}/>
+                            <Route path={LinkConstants.HOME} component={App}/>
+                            <Route exact path={LinkConstants.HOME} component={Homepage}/>
+                            <Route exact path={LinkConstants.POST_LIST} component={Posts}/>
+                            <Route exact path={LinkConstants.POST_CREATE} component={AddContainer}/>
+                            <UserProvider><Route exact path={`${LinkConstants.USER_PROFIL}/:id`} component={ProfilContainer}/></UserProvider>
                         </CategoryProvider>
-                    </main>
-                </Router>
-            </LoginProvider>
+                    </PostProvider>
+                    <Route exact path={LinkConstants.LOGIN} component={LoginContainer}/>
+                    <Route exact path={LinkConstants.LOGOUT} component={LogoutContainer}/>
+                    <Route exact path={LinkConstants.REGISTER} component={RegisterContainer}/>
+                    <CategoryProvider>
+                        <Route exact path={LinkConstants.CATEGORY_LIST} component={CategoriesList}/>
+                        <Route exact path={LinkConstants.CATEGORY_CREATE} component={CategoryCreate}/>
+                    </CategoryProvider>
+                </main>
+              </LoginProvider>
+            </Router>
         </AlertProvider>
     </div>
 );
