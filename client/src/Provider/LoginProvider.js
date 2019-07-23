@@ -41,7 +41,6 @@ export const LoginProvider = withRouter(({children, ...props}) => {
         register: (email, pseudo, password) => {
             const user = {email, pseudo, password};
             return userService.register(user).then(user => {
-                console.log(user);
             }, error => {
                 throw new Error(error.toString());
             })
@@ -56,7 +55,6 @@ export const LoginProvider = withRouter(({children, ...props}) => {
                     return {...prevState, user: JSON.parse(user)}
                 });
             }).catch(error => {
-                console.log(error);
                 alert.error(error.toString());
                 if (pathname === LinkConstants.HOME) {
                     return;

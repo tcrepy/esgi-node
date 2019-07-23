@@ -53,7 +53,6 @@ export const PostsList = withAlert((props) => {
     };
 
     const handleLike = (e, post) => {
-        console.log(context);
         e.preventDefault();
         context.like(post)
             .catch(err => {
