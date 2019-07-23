@@ -11,12 +11,10 @@ import {LogoutContainer} from "./Users/LogoutContainer";
 import {CategoryProvider} from "../Provider/CategoryProvider";
 import {CategoriesList} from "./TechWatch/CategoriesList";
 import {PostProvider} from "../Provider/PostProvider";
-import {PostsList} from "./TechWatch/PostsList";
 import {AddContainer} from "./TechWatch/AddContainer";
 import {CategoryCreate} from "./TechWatch/CategoryCreate";
 import {ProfilContainer} from "./Users/ProfilContainer";
 import {UserProvider} from "../Provider/UserProvider";
-import {PostByCategory} from "./TechWatch/PostByCategory";
 import {Posts} from "./TechWatch/Posts";
 
 

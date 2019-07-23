@@ -95,6 +95,9 @@ export const PostProvider = ({children}) => {
             setState(prevState => {
                 return {...prevState, search: value}
             });
+        },
+        like: (post) => {
+            return postServices.like(post).then(upvote => upvote);
         }
     });
     return <PostContext.Provider value={state}>

@@ -11,16 +11,20 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useMemo} from "react";
 import {CreateButton} from "../Nav/CreateButton";
 import {NavLink} from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import {List as ListIcon} from "@material-ui/icons";
 import {Container} from "@material-ui/core";
-import CardHeader from "@material-ui/core/CardHeader";
-import {UserContext} from "../../Context/UserContext";
+
+import noRecordImg from '../../assets/img/undraw_void_3ggu.svg'
 
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
+    },
+    noRecord: {
+        margin: 45
+    },
+    noRecordContent: {
+        color: theme.palette.text.secondary
     }
 }));
 
@@ -48,9 +52,20 @@ export const PostsList = withAlert((props) => {
             .catch(err => props.error(err.toString()));
     };
 
-    const handleLike = (e, item) => {
+    const handleLike = (e, post) => {
+        console.log(context);
         e.preventDefault();
-        console.log(item, e);
+        context.like(post)
+            .then(upvote => {
+                context.posts = context.posts.map(item => {
+                    if (item._id === post._id) {
+                      post.upvote = upvote;
+                    }
+                })
+            })
+            .catch(err => {
+                props.error(err.toString())
+            });
     };
 
     return useMemo(() => <Container maxWidth="md">
@@ -61,7 +76,13 @@ export const PostsList = withAlert((props) => {
                 context.posts.map((item, key) => <PostItem key={key} item={item} handleDelete={handleDelete} handleLike={handleLike}/>)
             }
         </ul>
-        }{context.fetched && context.posts.length === 0 && <div>No Records</div>}
+        }
+        {context.fetched && context.posts.length === 0 &&
+        <div className={classes.noRecord}>
+            <img src={noRecordImg} alt="no records" width={150} height={150}/>
+            <div className={classes.noRecordContent}>No Records</div>
+        </div>
+        }
             {!props.user && <NavLink to={LinkConstants.POST_CREATE}><CreateButton/></NavLink>}
         </List></Container>, [context, props.user]
     )
