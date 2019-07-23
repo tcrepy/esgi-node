@@ -177,7 +177,7 @@ export const Header = withUser(({user}) => {
             <NavLink className={classes.link} to={LinkConstants.REGISTER}><Button color="inherit">Register</Button></NavLink>
             <NavLink className={classes.link} to={LinkConstants.POST_LIST}><ListIcon/></NavLink>
             <NavLink className={classes.link} to={LinkConstants.CATEGORY_LIST}><Bookmark/></NavLink>
-            <NavLink className={classes.link} to={LinkConstants.POST_LIST}>TechWatch</NavLink>
+            <NavLink className={classes.link} to={LinkConstants.HOME}>TechWatch</NavLink>
         </div>
     );
 
@@ -237,7 +237,7 @@ export const Header = withUser(({user}) => {
                 </div>
                 {/*TODO::include sidebar with Drawer component*/}
                 <Typography className={classes.title} variant="h6" noWrap>
-                    <NavLink className={classes.link} to={LinkConstants.POST_LIST}>TechWatch</NavLink> </Typography>
+                    <NavLink className={classes.link} to={LinkConstants.HOME}>TechWatch</NavLink> </Typography>
                 <form onSubmit={handleSubmitSearch}>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
