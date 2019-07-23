@@ -48,12 +48,17 @@ export const PostsList = withAlert((props) => {
             .catch(err => props.error(err.toString()));
     };
 
+    const handleLike = (e, item) => {
+        e.preventDefault();
+        console.log(item, e);
+    };
+
     return useMemo(() => <Container maxWidth="md">
         <List className={classes.root}>
             {!context.fetched && <div>Loading</div>} {context.fetched && context.posts.length > 0 &&
         <ul>
             {
-                context.posts.map((item, key) => <PostItem key={key} item={item} handleDelete={handleDelete}/>)
+                context.posts.map((item, key) => <PostItem key={key} item={item} handleDelete={handleDelete} handleLike={handleLike}/>)
             }
         </ul>
         }{context.fetched && context.posts.length === 0 && <div>No Records</div>}
