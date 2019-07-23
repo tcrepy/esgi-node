@@ -274,5 +274,5 @@ export const Header = withRouter(({...props}) => {
             </div>}
             </Toolbar> </AppBar> {renderMenu}
         </div>
-    ), [context.search, userContext, isMenuOpen, isMobileMenuOpen, state]);
+    ), [context.search, userContext, isMenuOpen, isMobileMenuOpen, state, pathname]);
 });
