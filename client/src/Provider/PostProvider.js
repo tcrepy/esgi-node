@@ -33,7 +33,7 @@ export const PostProvider = ({children}) => {
             }
 
             if (search) {
-                url += `title=${search}&description=${search}`;
+                url += `title=${search}&search=${search}`;
             }
             return fetch(`${url}`, requestOptions)
                 .then(response => {
